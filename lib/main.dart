@@ -16,7 +16,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      title: 'Flutter',
       routerConfig: router,
       theme: ThemeData(
         textTheme: GoogleFonts.nunitoTextTheme(Theme.of(context).textTheme),

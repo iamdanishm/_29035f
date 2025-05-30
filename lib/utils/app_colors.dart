@@ -10,4 +10,5 @@ class AppColors {
   static const lightWhite = Color(0xFFF5F5F5);
   static const shadowLight = Color(0xFFD0D5E9);
   static const embossLight = Color(0xFFF1F2F6);
+  static const errorColor = Color(0xFFFF3333);
 }

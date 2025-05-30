@@ -1,33 +1,35 @@
-import 'package:_29035f/providers/auth_provider/login_provider.dart';
+import 'package:_29035f/providers/auth_provider/register_provider.dart';
 import 'package:_29035f/utils/app_colors.dart';
-import 'package:_29035f/utils/app_images.dart';
 import 'package:_29035f/utils/widgets/neu_button.dart';
 import 'package:_29035f/utils/widgets/neu_dialog.dart';
 import 'package:_29035f/utils/widgets/neu_loading.dart';
 import 'package:_29035f/utils/widgets/neu_text_field.dart';
-import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-class LoginScreen extends ConsumerStatefulWidget {
-  const LoginScreen({super.key});
+class RegisterScreen extends ConsumerStatefulWidget {
+  const RegisterScreen({super.key});
 
   @override
-  ConsumerState<LoginScreen> createState() => _LoginScreenState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends ConsumerState<LoginScreen> {
+class _RegisterScreenState extends ConsumerState<RegisterScreen> {
+  bool _isDialogShowing = false;
+
   @override
   void initState() {
     super.initState();
-    listenLoginState();
+    registerListenState();
   }
 
-  void listenLoginState() {
-    ref.listenManual<AsyncValue<void>>(loginProvider, (_, next) {
+  void registerListenState() {
+    ref.listenManual<AsyncValue<void>>(registerProvider, (_, next) {
       if (next is AsyncError) {
-        if (Navigator.of(context, rootNavigator: true).canPop()) {
+        if (_isDialogShowing) {
           Navigator.of(context, rootNavigator: true).pop();
+          _isDialogShowing = false;
         }
         showDialog(
           context: context,
@@ -41,9 +43,14 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           ),
         );
       }
-      if (next is AsyncData<void> &&
-          Navigator.of(context, rootNavigator: true).canPop()) {
-        Navigator.of(context, rootNavigator: true).pop();
+
+      if (next is AsyncData<void>) {
+        if (_isDialogShowing) {
+          Navigator.of(context, rootNavigator: true).pop();
+          _isDialogShowing = false;
+        }
+        // TODO: Navigate and show success here
+        // context.go('/login');
       }
     });
   }
@@ -53,27 +60,37 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     super.dispose();
   }
 
-  goToRegister() => {
-    FocusManager.instance.primaryFocus?.unfocus(),
-    context.push('/register'),
-  };
-
-  loginFun(loginState) {
+  registerFun(registerState) {
     FocusManager.instance.primaryFocus?.unfocus();
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) => const NeuLoading(),
-    );
-    final email = ref.read(emailProvider);
-    final password = ref.read(passwordProvider);
-    ref.read(loginProvider.notifier).login(email, password);
+    if (!_isDialogShowing) {
+      _isDialogShowing = true;
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => const NeuLoading(),
+      );
+    }
+    String name = ref.read(registerNameProvider);
+    String email = ref.read(registerEmailProvider);
+    String countryCode = ref.read(registerCountryCodeProvider);
+    String phoneNumber = ref.read(registerPhoneNoProvider);
+    String password = ref.read(registerPasswordProvider);
+    String confirmPassword = ref.read(registerConfirmPasswordProvider);
+    ref
+        .read(registerProvider.notifier)
+        .register(
+          name,
+          email,
+          countryCode,
+          phoneNumber,
+          password,
+          confirmPassword,
+        );
   }
 
   @override
   Widget build(BuildContext context) {
-    final loginState = ref.watch(loginProvider);
-
+    final registerState = ref.watch(registerProvider);
     return Scaffold(
       body: SafeArea(
         child: GestureDetector(
@@ -85,62 +102,76 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               children: [
                 const SizedBox(height: 20),
                 Text(
-                  'Welcome ~ Hare Mai!',
+                  'Create Account',
                   style: Theme.of(context).textTheme.titleLarge!.copyWith(
                     fontWeight: FontWeight.bold,
                     color: AppColors.textColor,
                   ),
                 ),
                 const SizedBox(height: 30),
-
                 NeuTextField(
-                  label: "Email or Phone Number",
-                  keyboardType: TextInputType.emailAddress,
+                  label: "Name",
+                  keyboardType: TextInputType.name,
                   onChanged: (text) =>
-                      ref.read(emailProvider.notifier).state = text,
+                      ref.read(registerNameProvider.notifier).state = text,
                   validator: (text) => null,
                 ),
                 const SizedBox(height: 25),
+                NeuTextField(
+                  label: "Email ID",
+                  keyboardType: TextInputType.emailAddress,
+                  onChanged: (text) =>
+                      ref.read(registerEmailProvider.notifier).state = text,
+                  validator: (text) => null,
+                ),
 
+                const SizedBox(height: 25),
+                NeuPhoneTextField(
+                  label: "Phone Number",
+                  keyboardType: TextInputType.phone,
+                  onChanged: (text) =>
+                      ref.read(registerPhoneNoProvider.notifier).state = text,
+                  validator: (text) => null,
+                ),
+                const SizedBox(height: 25),
                 NeuTextField(
                   label: "Password",
                   keyboardType: TextInputType.visiblePassword,
                   obscureText: true,
                   onChanged: (text) =>
-                      ref.read(passwordProvider.notifier).state = text,
+                      ref.read(registerPasswordProvider.notifier).state = text,
+                  validator: (text) => null,
+                ),
+                const SizedBox(height: 25),
+                NeuTextField(
+                  label: "Re-Enter Password",
+                  keyboardType: TextInputType.visiblePassword,
+                  obscureText: true,
+                  onChanged: (text) =>
+                      ref.read(registerConfirmPasswordProvider.notifier).state =
+                          text,
                   validator: (text) => null,
                 ),
 
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: TextButton(
-                    onPressed: () {},
-                    style: TextButton.styleFrom(
-                      foregroundColor: AppColors.lightTextColor,
-                    ),
-                    child: const Text("Forgot Password?"),
-                  ),
-                ),
-
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 25),
+                  padding: const EdgeInsets.symmetric(vertical: 30),
                   child: NeuButton(
-                    title: loginState.isLoading ? "Logging in..." : "Login",
+                    title: "Create",
+                    onPressed: registerState.isLoading
+                        ? null
+                        : () => registerFun(registerState),
                     shadowLightColor: AppColors.shadowLight,
                     color: AppColors.embossLight,
                     titleColor: AppColors.textColor,
                     height: 58,
                     width: double.infinity,
-                    onPressed: loginState.isLoading
-                        ? null
-                        : () => loginFun(loginState),
                   ),
                 ),
 
                 Align(
                   alignment: Alignment.center,
                   child: TextButton(
-                    onPressed: () => goToRegister(),
+                    onPressed: () => context.pop(),
                     style: TextButton.styleFrom(
                       foregroundColor: AppColors.lightTextColor,
                     ),
@@ -148,28 +179,18 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       text: TextSpan(
                         children: <InlineSpan>[
                           TextSpan(
-                            text: 'Create Account',
+                            text: 'Login',
                             style: Theme.of(context).textTheme.labelLarge!
                                 .copyWith(color: AppColors.lightPink),
                           ),
                         ],
-                        text: 'Don\'t have an account? ',
+                        text: 'Have an account already? ',
                         style: Theme.of(context).textTheme.labelLarge!.copyWith(
                           color: AppColors.lightTextColor,
                         ),
                       ),
                     ),
                   ),
-                ),
-                const SizedBox(height: 30),
-                Align(
-                  alignment: Alignment.center,
-                  child: Image.asset(AppImages.logo, width: 200),
-                ),
-                const SizedBox(height: 50),
-                Align(
-                  alignment: Alignment.center,
-                  child: Image.asset(AppImages.logo2, width: 200),
                 ),
               ],
             ),
