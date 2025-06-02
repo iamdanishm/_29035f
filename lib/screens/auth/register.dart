@@ -16,21 +16,59 @@ class RegisterScreen extends ConsumerStatefulWidget {
 }
 
 class _RegisterScreenState extends ConsumerState<RegisterScreen> {
-  bool _isDialogShowing = false;
+  bool _hasInitialized = false;
+  AsyncValue<void>? _previousRegisterState;
+  bool _isLoadingDialogVisible = false;
 
   @override
-  void initState() {
-    super.initState();
-    registerListenState();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_hasInitialized) return;
+    _hasInitialized = true;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(registerEmailProvider.notifier).state = "";
+      ref.read(registerPasswordProvider.notifier).state = "";
+      ref.read(registerConfirmPasswordProvider.notifier).state = "";
+      ref.read(registerNameProvider.notifier).state = "";
+      ref.read(registerPhoneNoProvider.notifier).state = "";
+      ref.read(registerCountryCodeProvider.notifier).state = "+91";
+      registerListenState();
+    });
+  }
+
+  @override
+  void dispose() {
+    _previousRegisterState = null;
+    super.dispose();
   }
 
   void registerListenState() {
     ref.listenManual<AsyncValue<void>>(registerProvider, (_, next) {
-      if (next is AsyncError) {
-        if (_isDialogShowing) {
-          Navigator.of(context, rootNavigator: true).pop();
-          _isDialogShowing = false;
+      // Skip if same as previous (ignore initial)
+      if (_previousRegisterState == null) {
+        _previousRegisterState = next;
+        return;
+      }
+      if (next is AsyncLoading) {
+        if (!_isLoadingDialogVisible) {
+          _isLoadingDialogVisible = true;
+          showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (context) => const NeuLoading(),
+          );
         }
+        return;
+      }
+
+      if (_isLoadingDialogVisible) {
+        if (Navigator.of(context, rootNavigator: true).canPop()) {
+          Navigator.of(context, rootNavigator: true).pop();
+        }
+        _isLoadingDialogVisible = false;
+      }
+
+      if (next is AsyncError) {
         showDialog(
           context: context,
           builder: (context) => NeuDialog(
@@ -45,31 +83,26 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
       }
 
       if (next is AsyncData<void>) {
-        if (_isDialogShowing) {
-          Navigator.of(context, rootNavigator: true).pop();
-          _isDialogShowing = false;
-        }
-        // TODO: Navigate and show success here
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              'Account Created Successfully',
+              style: Theme.of(context).textTheme.labelLarge,
+            ),
+            behavior: SnackBarBehavior.floating,
+            backgroundColor: AppColors.primaryColor,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+          ),
+        );
         // context.go('/login');
       }
     });
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
   registerFun(registerState) {
     FocusManager.instance.primaryFocus?.unfocus();
-    if (!_isDialogShowing) {
-      _isDialogShowing = true;
-      showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) => const NeuLoading(),
-      );
-    }
     String name = ref.read(registerNameProvider);
     String email = ref.read(registerEmailProvider);
     String countryCode = ref.read(registerCountryCodeProvider);

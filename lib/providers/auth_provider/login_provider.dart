@@ -40,6 +40,9 @@ class LoginController extends AsyncNotifier<void> {
   Future<void> login(String email, String password) async {
     state = const AsyncLoading();
 
+    const correctEmail = "test@gmail.com";
+    const correctPassword = "Test@123";
+
     try {
       if (email.isEmpty || password.isEmpty) {
         state = const AsyncError(
@@ -61,6 +64,11 @@ class LoginController extends AsyncNotifier<void> {
       }
 
       await Future.delayed(const Duration(seconds: 1));
+
+      if (email != correctEmail || password != correctPassword) {
+        state = const AsyncError('Invalid email or password', StackTrace.empty);
+        return;
+      }
       state = const AsyncData(null);
     } catch (e, st) {
       state = AsyncError(e, st);
