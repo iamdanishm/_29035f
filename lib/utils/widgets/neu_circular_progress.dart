@@ -18,19 +18,18 @@ class NeuCircularProgress extends ConsumerWidget {
       clipBehavior: Clip.none,
       children: [
         Positioned(
-          top: 50.r,
-          child: SizedBox(
-            width: 300.r,
-            height: 300.r,
-            child: CustomPaint(painter: DottedRingPainter()),
+          top: 50.h,
+          child: CustomPaint(
+            size: Size(300.w, 300.h),
+            painter: DottedRingPainter(),
           ),
         ),
 
         Positioned(
-          top: 75.r,
+          top: 75.h,
           child: SizedBox(
-            width: 250.r,
-            height: 250.r,
+            width: 250.w,
+            height: 250.h,
             child: Neumorphic(
               style: NeumorphicStyle(
                 shape: NeumorphicShape.flat,
@@ -46,10 +45,10 @@ class NeuCircularProgress extends ConsumerWidget {
           ),
         ),
         Positioned(
-          top: 100.r,
+          top: 100.h,
           child: SizedBox(
-            width: 200.r,
-            height: 200.r,
+            width: 200.w,
+            height: 200.h,
             child: Neumorphic(
               style: NeumorphicStyle(
                 shape: NeumorphicShape.flat,
@@ -65,18 +64,17 @@ class NeuCircularProgress extends ConsumerWidget {
           ),
         ),
         Positioned(
-          top: 90.r,
-          child: SizedBox(
-            width: 220.r,
-            height: 220.r,
-            child: CustomPaint(painter: ProgressArcPainter(percentage)),
+          top: 100.h,
+          child: CustomPaint(
+            size: Size(200.w, 200.h),
+            painter: ProgressArcPainter(percentage),
           ),
         ),
         Positioned(
-          top: 150.r,
+          top: 150.h,
           child: SizedBox(
-            width: 100.r,
-            height: 100.r,
+            width: 100.w,
+            height: 100.h,
             child: Neumorphic(
               style: NeumorphicStyle(
                 shape: NeumorphicShape.flat,
@@ -92,10 +90,10 @@ class NeuCircularProgress extends ConsumerWidget {
           ),
         ),
         Positioned(
-          top: 163.r,
+          top: 163.h,
           child: SizedBox(
-            width: 75.r,
-            height: 75.r,
+            width: 75.w,
+            height: 75.h,
             child: Neumorphic(
               style: NeumorphicStyle(
                 shape: NeumorphicShape.flat,
@@ -111,13 +109,10 @@ class NeuCircularProgress extends ConsumerWidget {
           ),
         ),
         Positioned(
-          top: 100.r,
-          child: SizedBox(
-            width: 200.r,
-            height: 200.r,
-            child: CustomPaint(
-              painter: PercentageTextPainter(percentage, context),
-            ),
+          top: 100.h,
+          child: CustomPaint(
+            size: Size(200.w, 200.h),
+            painter: PercentageTextPainter(percentage, context),
           ),
         ),
       ],

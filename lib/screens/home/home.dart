@@ -5,7 +5,7 @@ import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-final targetPercentageProvider = StateProvider<double>((ref) => 40);
+final targetPercentageProvider = StateProvider<double>((ref) => 90);
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -48,7 +48,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(
-                height: 400.r,
+                height: 400.h,
                 child: Neumorphic(
                   style: NeumorphicStyle(
                     shape: NeumorphicShape.concave,

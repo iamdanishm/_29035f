@@ -10,18 +10,18 @@ class DottedRingPainter extends CustomPainter {
     final center = size.center(Offset.zero);
 
     final radius = 130.r;
-    final gap = 8.r;
-    final lineLength = 20.r;
+    final gap = 8.h;
+    final lineLength = 20.h;
 
     final dotPaint = Paint()
       ..color = AppColors.accentColor
       ..strokeCap = StrokeCap.round
-      ..strokeWidth = 3.r;
+      ..strokeWidth = 3.w;
 
     final linePaint = Paint()
       ..color = AppColors.accentColor
       ..strokeCap = StrokeCap.round
-      ..strokeWidth = 2.r;
+      ..strokeWidth = 2.w;
 
     const totalSegments = 65;
     for (int i = 0; i < totalSegments; i++) {
