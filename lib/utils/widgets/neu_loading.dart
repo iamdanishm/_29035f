@@ -1,6 +1,7 @@
 import 'package:_29035f/utils/app_colors.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class NeuLoading extends ConsumerWidget {
   const NeuLoading({super.key});
@@ -11,11 +12,13 @@ class NeuLoading extends ConsumerWidget {
       backgroundColor: Colors.transparent,
       child: Center(
         child: SizedBox(
-          width: 150,
+          width: 150.w,
           child: Neumorphic(
             style: NeumorphicStyle(
               shape: NeumorphicShape.concave,
-              boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(15)),
+              boxShape: NeumorphicBoxShape.roundRect(
+                BorderRadius.circular(15.r),
+              ),
               depth: 6,
               intensity: 0.6,
               shadowLightColor: AppColors.shadowLight,
@@ -23,7 +26,7 @@ class NeuLoading extends ConsumerWidget {
               color: AppColors.primaryColor,
             ),
             child: Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: EdgeInsets.all(16.w),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -34,7 +37,7 @@ class NeuLoading extends ConsumerWidget {
                       color: AppColors.textColor,
                     ),
                   ),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16.h),
                   const CircularProgressIndicator.adaptive(
                     valueColor: AlwaysStoppedAnimation<Color>(
                       AppColors.textColor,

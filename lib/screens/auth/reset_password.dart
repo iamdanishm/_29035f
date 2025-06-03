@@ -7,6 +7,7 @@ import 'package:_29035f/utils/widgets/neu_loading.dart';
 import 'package:_29035f/utils/widgets/neu_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
 class ResetPassword extends ConsumerStatefulWidget {
@@ -93,7 +94,7 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
             behavior: SnackBarBehavior.floating,
             backgroundColor: AppColors.primaryColor,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(12.r),
             ),
           ),
         );
@@ -117,12 +118,12 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 30.h),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               NeuBackBtn(),
-              SizedBox(height: 40),
+              SizedBox(height: 40.h),
               Center(
                 child: Text(
                   'Reset Password',
@@ -133,8 +134,7 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
                   ),
                 ),
               ),
-              SizedBox(height: 40),
-
+              SizedBox(height: 40.h),
               NeuTextField(
                 label: "Enter New Password",
                 keyboardType: TextInputType.visiblePassword,
@@ -143,7 +143,7 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
                     ref.read(newRPassProvider.notifier).state = text,
                 validator: (text) => null,
               ),
-              SizedBox(height: 30),
+              SizedBox(height: 30.h),
               NeuTextField(
                 label: "Re-enter New Password",
                 keyboardType: TextInputType.visiblePassword,
@@ -152,14 +152,14 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
                     ref.read(confirmRPassProvider.notifier).state = text,
                 validator: (text) => null,
               ),
-              SizedBox(height: 30),
+              SizedBox(height: 30.h),
               NeuButton(
                 title: "Reset Password",
                 onPressed: resetPassFun,
                 shadowLightColor: AppColors.shadowLight,
                 color: AppColors.embossLight,
                 titleColor: AppColors.textColor,
-                height: 58,
+                height: 58.h,
                 width: double.infinity,
               ),
             ],

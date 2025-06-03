@@ -4,12 +4,13 @@ import 'package:_29035f/screens/auth/login.dart';
 import 'package:_29035f/screens/auth/otp_verification/verify_otp.dart';
 import 'package:_29035f/screens/auth/register.dart';
 import 'package:_29035f/screens/auth/reset_password.dart';
+import 'package:_29035f/screens/home/home.dart';
 import 'package:_29035f/screens/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 final GoRouter router = GoRouter(
-  initialLocation: '/',
+  initialLocation: '/home',
   debugLogDiagnostics: true,
   routes: <GoRoute>[
     GoRoute(
@@ -61,7 +62,21 @@ final GoRouter router = GoRouter(
         return ResetPassword();
       },
     ),
+
+    GoRoute(
+      path: "/home",
+      name: "home",
+      builder: (BuildContext context, GoRouterState state) {
+        return HomeScreen();
+      },
+    ),
   ],
-  errorBuilder: (context, state) =>
-      Scaffold(body: Center(child: Text('No route defined for ${state.uri}'))),
+  errorBuilder: (context, state) => Scaffold(
+    body: Center(
+      child: Text(
+        '🥺No route defined for ${state.uri}',
+        style: Theme.of(context).textTheme.titleLarge,
+      ),
+    ),
+  ),
 );

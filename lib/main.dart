@@ -1,8 +1,9 @@
 import 'package:_29035f/routes/router.dart';
 import 'package:_29035f/utils/app_colors.dart';
+import 'package:_29035f/utils/text_theme.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,12 +16,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      routerConfig: router,
-      theme: ThemeData(
-        textTheme: GoogleFonts.nunitoTextTheme(Theme.of(context).textTheme),
-        scaffoldBackgroundColor: AppColors.backgroundColor,
-      ),
+    return ScreenUtilInit(
+      designSize: const Size(390, 844),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (_, child) {
+        return MaterialApp.router(
+          routerConfig: router,
+          theme: ThemeData(
+            scaffoldBackgroundColor: AppColors.backgroundColor,
+            textTheme: googleTextTheme,
+          ),
+        );
+      },
     );
   }
 }

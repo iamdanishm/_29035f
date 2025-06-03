@@ -8,6 +8,7 @@ import 'package:_29035f/utils/widgets/neu_loading.dart';
 import 'package:_29035f/utils/widgets/neu_otp_field.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
 class VerifyOtp extends ConsumerStatefulWidget {
@@ -93,7 +94,7 @@ class _VerifyOtpState extends ConsumerState<VerifyOtp> {
             behavior: SnackBarBehavior.floating,
             backgroundColor: AppColors.primaryColor,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(12.r),
             ),
             duration: const Duration(seconds: 2),
           ),
@@ -117,12 +118,12 @@ class _VerifyOtpState extends ConsumerState<VerifyOtp> {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 30.h),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               NeuBackBtn(),
-              SizedBox(height: 40),
+              SizedBox(height: 40.h),
               Center(
                 child: Text(
                   'OTP Verification',
@@ -133,9 +134,9 @@ class _VerifyOtpState extends ConsumerState<VerifyOtp> {
                   ),
                 ),
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 20.h),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 50),
+                padding: EdgeInsets.symmetric(horizontal: 50.w),
                 child: Center(
                   child: Text(
                     'Enter the verification code we just sent on your phone number',
@@ -146,7 +147,7 @@ class _VerifyOtpState extends ConsumerState<VerifyOtp> {
                   ),
                 ),
               ),
-              SizedBox(height: 40),
+              SizedBox(height: 40.h),
               TrueEmbossedOtp(
                 enable: timer != 0,
                 key: ValueKey(resetCounter),
@@ -158,7 +159,7 @@ class _VerifyOtpState extends ConsumerState<VerifyOtp> {
                   await otpNotifier.submitOtp();
                 },
               ),
-              SizedBox(height: 40),
+              SizedBox(height: 40.h),
               Visibility(
                 visible: timer != 0,
                 replacement: const SizedBox(),
@@ -172,7 +173,7 @@ class _VerifyOtpState extends ConsumerState<VerifyOtp> {
                   ),
                 ),
               ),
-              SizedBox(height: 24),
+              SizedBox(height: 24.h),
               Align(
                 alignment: Alignment.center,
                 child: TextButton(
@@ -186,7 +187,7 @@ class _VerifyOtpState extends ConsumerState<VerifyOtp> {
                   style: TextButton.styleFrom(
                     foregroundColor: AppColors.errorColor,
                   ),
-                  child: Text("Resend OTP"),
+                  child: const Text("Resend OTP"),
                 ),
               ),
             ],

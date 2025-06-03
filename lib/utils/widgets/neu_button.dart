@@ -1,5 +1,6 @@
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class NeuButton extends ConsumerWidget {
   const NeuButton({
@@ -34,7 +35,7 @@ class NeuButton extends ConsumerWidget {
           shadowLightColor: shadowLightColor,
           color: color,
           lightSource: LightSource.topLeft,
-          boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(50)),
+          boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(50.r)),
         ),
         child: Center(
           child: Text(

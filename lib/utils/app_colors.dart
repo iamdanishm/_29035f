@@ -9,6 +9,8 @@ class AppColors {
   static const lightPink = Color(0xFFE6A09C);
   static const lightWhite = Color(0xFFF5F5F5);
   static const shadowLight = Color(0xFFD0D5E9);
+  static const shadowDark = Color(0xFFA7A7A7);
   static const embossLight = Color(0xFFF1F2F6);
   static const errorColor = Color(0xFFFF3333);
+  static const accentColor = Color(0xFFC5DAE9);
 }

@@ -3,6 +3,8 @@ import 'dart:math';
 import 'package:_29035f/utils/app_colors.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
 const baseUrl = "assets/images/splash_illustration";
 
@@ -21,28 +23,40 @@ final splashImageProvider = Provider.autoDispose<String>((ref) {
   return splashImages[random.nextInt(splashImages.length)];
 });
 
-class SplashScreen extends ConsumerWidget {
+class SplashScreen extends ConsumerStatefulWidget {
   const SplashScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final height = MediaQuery.sizeOf(context).height;
-    final width = MediaQuery.sizeOf(context).width;
+  ConsumerState<SplashScreen> createState() => _SplashScreenState();
+}
 
+class _SplashScreenState extends ConsumerState<SplashScreen> {
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(const Duration(seconds: 3)).then((_) {
+      if (mounted) {
+        context.go('/home');
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final image = ref.watch(splashImageProvider);
 
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.all(35.0),
+        padding: EdgeInsets.all(35.w),
         child: Center(
           child: SizedBox(
-            height: height * 0.75,
-            width: width,
+            height: 0.75.sh,
+            width: 1.sw,
             child: Neumorphic(
               style: NeumorphicStyle(
                 shape: NeumorphicShape.concave,
                 boxShape: NeumorphicBoxShape.roundRect(
-                  BorderRadius.circular(45),
+                  BorderRadius.circular(45.r),
                 ),
                 depth: 6,
                 intensity: 0.6,
@@ -51,7 +65,7 @@ class SplashScreen extends ConsumerWidget {
                 color: Colors.white,
               ),
               child: Padding(
-                padding: const EdgeInsets.all(50.0),
+                padding: EdgeInsets.all(50.w),
                 child: Image.asset(image, fit: BoxFit.contain),
               ),
             ),

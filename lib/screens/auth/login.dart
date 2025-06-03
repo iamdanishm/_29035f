@@ -7,6 +7,7 @@ import 'package:_29035f/utils/widgets/neu_loading.dart';
 import 'package:_29035f/utils/widgets/neu_text_field.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
@@ -86,7 +87,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             behavior: SnackBarBehavior.floating,
             backgroundColor: AppColors.primaryColor,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(12.r),
             ),
           ),
         );
@@ -137,15 +138,15 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   constraints: BoxConstraints(minHeight: constraints.maxHeight),
                   child: IntrinsicHeight(
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 30,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 20.w,
+                        vertical: 30.h,
                       ),
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const SizedBox(height: 20),
+                          SizedBox(height: 20.h),
                           Text(
                             'Welcome ~ Hare Mai!',
                             style: Theme.of(context).textTheme.titleLarge!
@@ -154,8 +155,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                   color: AppColors.textColor,
                                 ),
                           ),
-                          const SizedBox(height: 30),
-
+                          SizedBox(height: 30.h),
                           NeuTextField(
                             label: "Email or Phone Number",
                             keyboardType: TextInputType.emailAddress,
@@ -163,8 +163,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                 ref.read(emailProvider.notifier).state = text,
                             validator: (text) => null,
                           ),
-                          const SizedBox(height: 25),
-
+                          SizedBox(height: 25.h),
                           NeuTextField(
                             label: "Password",
                             keyboardType: TextInputType.visiblePassword,
@@ -174,7 +173,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                     text,
                             validator: (text) => null,
                           ),
-
                           Align(
                             alignment: Alignment.centerRight,
                             child: TextButton(
@@ -185,9 +183,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                               child: const Text("Forgot Password?"),
                             ),
                           ),
-
                           Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 25),
+                            padding: EdgeInsets.symmetric(vertical: 25.h),
                             child: NeuButton(
                               title: loginState.isLoading
                                   ? "Logging in..."
@@ -195,14 +192,13 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                               shadowLightColor: AppColors.shadowLight,
                               color: AppColors.embossLight,
                               titleColor: AppColors.textColor,
-                              height: 58,
+                              height: 58.h,
                               width: double.infinity,
                               onPressed: loginState.isLoading
                                   ? null
                                   : () => loginFun(loginState),
                             ),
                           ),
-
                           Align(
                             alignment: Alignment.center,
                             child: TextButton(
@@ -230,21 +226,15 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                               ),
                             ),
                           ),
-
-                          const Spacer(),
-
-                          /// 👇 Centered logo above bottom
+                          const Spacer(flex: 1),
                           Align(
                             alignment: Alignment.center,
-                            child: Image.asset(AppImages.logo, width: 200),
+                            child: Image.asset(AppImages.logo, width: 200.w),
                           ),
-
-                          const Spacer(),
-
-                          /// 👇 Bottom-aligned logo
+                          const Spacer(flex: 1),
                           Align(
                             alignment: Alignment.center,
-                            child: Image.asset(AppImages.logo2, width: 210),
+                            child: Image.asset(AppImages.logo2, width: 210.w),
                           ),
                         ],
                       ),

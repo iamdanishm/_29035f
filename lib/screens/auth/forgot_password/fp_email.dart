@@ -7,6 +7,7 @@ import 'package:_29035f/utils/widgets/neu_loading.dart';
 import 'package:_29035f/utils/widgets/neu_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
 class FPEmailScreen extends ConsumerStatefulWidget {
@@ -40,11 +41,11 @@ class _FPEmailScreenState extends ConsumerState<FPEmailScreen> {
 
   void listenFpState() {
     ref.listenManual<AsyncValue<void>>(fpProvider, (previous, next) {
-      // Skip if same as previous (ignore initial)
       if (_previousFPState == null) {
         _previousFPState = next;
         return;
       }
+
       if (next is AsyncLoading) {
         if (!_isLoadingDialogVisible) {
           _isLoadingDialogVisible = true;
@@ -89,14 +90,13 @@ class _FPEmailScreenState extends ConsumerState<FPEmailScreen> {
             behavior: SnackBarBehavior.floating,
             backgroundColor: AppColors.primaryColor,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(12.r),
             ),
             duration: const Duration(seconds: 2),
           ),
         );
         Future.delayed(
           const Duration(seconds: 1),
-          // ignore: use_build_context_synchronously
           () => context.push("/verify_otp"),
         );
       }
@@ -108,12 +108,12 @@ class _FPEmailScreenState extends ConsumerState<FPEmailScreen> {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 30.h),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              NeuBackBtn(),
-              SizedBox(height: 40),
+              const NeuBackBtn(),
+              SizedBox(height: 40.h),
               Center(
                 child: Text(
                   'Forgot Password?',
@@ -124,9 +124,9 @@ class _FPEmailScreenState extends ConsumerState<FPEmailScreen> {
                   ),
                 ),
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 20.h),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 50),
+                padding: EdgeInsets.symmetric(horizontal: 50.w),
                 child: Center(
                   child: Text(
                     'Enter your email address to receive a verification code to reset your password.',
@@ -137,9 +137,12 @@ class _FPEmailScreenState extends ConsumerState<FPEmailScreen> {
                   ),
                 ),
               ),
-              SizedBox(height: 40),
-              Image.asset('assets/images/illustrations/email.png'),
-              SizedBox(height: 40),
+              SizedBox(height: 40.h),
+              Image.asset(
+                'assets/images/illustrations/email.png',
+                height: 180.h,
+              ),
+              SizedBox(height: 40.h),
               NeuTextField(
                 label: "Email ID",
                 keyboardType: TextInputType.emailAddress,
@@ -148,7 +151,7 @@ class _FPEmailScreenState extends ConsumerState<FPEmailScreen> {
                 },
                 validator: (text) => null,
               ),
-              SizedBox(height: 40),
+              SizedBox(height: 40.h),
               NeuButton(
                 title: "Send Code",
                 onPressed: () {
@@ -158,7 +161,7 @@ class _FPEmailScreenState extends ConsumerState<FPEmailScreen> {
                 shadowLightColor: AppColors.shadowLight,
                 color: AppColors.embossLight,
                 titleColor: AppColors.textColor,
-                height: 58,
+                height: 58.h,
                 width: double.infinity,
               ),
             ],

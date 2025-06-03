@@ -6,6 +6,7 @@ import 'package:_29035f/utils/widgets/neu_loading.dart';
 import 'package:_29035f/utils/widgets/neu_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
 class RegisterScreen extends ConsumerStatefulWidget {
@@ -92,7 +93,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
             behavior: SnackBarBehavior.floating,
             backgroundColor: AppColors.primaryColor,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(12.r),
             ),
           ),
         );
@@ -129,11 +130,11 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
         child: GestureDetector(
           onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
           child: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+            padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 30.h),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 20),
+                SizedBox(height: 20.h),
                 Text(
                   'Create Account',
                   style: Theme.of(context).textTheme.titleLarge!.copyWith(
@@ -141,7 +142,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                     color: AppColors.textColor,
                   ),
                 ),
-                const SizedBox(height: 30),
+                SizedBox(height: 30.h),
                 NeuTextField(
                   label: "Name",
                   keyboardType: TextInputType.name,
@@ -149,7 +150,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                       ref.read(registerNameProvider.notifier).state = text,
                   validator: (text) => null,
                 ),
-                const SizedBox(height: 25),
+                SizedBox(height: 25.h),
                 NeuTextField(
                   label: "Email ID",
                   keyboardType: TextInputType.emailAddress,
@@ -157,8 +158,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                       ref.read(registerEmailProvider.notifier).state = text,
                   validator: (text) => null,
                 ),
-
-                const SizedBox(height: 25),
+                SizedBox(height: 25.h),
                 NeuPhoneTextField(
                   label: "Phone Number",
                   keyboardType: TextInputType.phone,
@@ -166,7 +166,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                       ref.read(registerPhoneNoProvider.notifier).state = text,
                   validator: (text) => null,
                 ),
-                const SizedBox(height: 25),
+                SizedBox(height: 25.h),
                 NeuTextField(
                   label: "Password",
                   keyboardType: TextInputType.visiblePassword,
@@ -175,7 +175,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                       ref.read(registerPasswordProvider.notifier).state = text,
                   validator: (text) => null,
                 ),
-                const SizedBox(height: 25),
+                SizedBox(height: 25.h),
                 NeuTextField(
                   label: "Re-Enter Password",
                   keyboardType: TextInputType.visiblePassword,
@@ -185,9 +185,8 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                           text,
                   validator: (text) => null,
                 ),
-
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 30),
+                  padding: EdgeInsets.symmetric(vertical: 30.h),
                   child: NeuButton(
                     title: "Create",
                     onPressed: registerState.isLoading
@@ -196,11 +195,10 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                     shadowLightColor: AppColors.shadowLight,
                     color: AppColors.embossLight,
                     titleColor: AppColors.textColor,
-                    height: 58,
+                    height: 58.h,
                     width: double.infinity,
                   ),
                 ),
-
                 Align(
                   alignment: Alignment.center,
                   child: TextButton(

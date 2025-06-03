@@ -2,6 +2,7 @@ import 'package:_29035f/utils/app_colors.dart';
 import 'package:_29035f/utils/widgets/neu_back_btn.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class FPResend extends ConsumerWidget {
   const FPResend({super.key});
@@ -11,12 +12,12 @@ class FPResend extends ConsumerWidget {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 30.h),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               NeuBackBtn(),
-              SizedBox(height: 40),
+              SizedBox(height: 40.h),
               Center(
                 child: Text(
                   'Forgot Password?',
@@ -27,9 +28,9 @@ class FPResend extends ConsumerWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 20.h),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 60),
+                padding: EdgeInsets.symmetric(horizontal: 60.w),
                 child: Center(
                   child: Text(
                     'We have sent a reset password link to your email account',
@@ -40,9 +41,13 @@ class FPResend extends ConsumerWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 40),
-              Image.asset('assets/images/illustrations/email.png'),
-              SizedBox(height: 40),
+              SizedBox(height: 40.h),
+              Image.asset(
+                'assets/images/illustrations/email.png',
+                height: 150.h,
+                width: 150.w,
+              ),
+              SizedBox(height: 40.h),
               Align(
                 alignment: Alignment.center,
                 child: TextButton(

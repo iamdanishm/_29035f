@@ -3,6 +3,7 @@ import 'package:_29035f/utils/app_colors.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class NeuTextField extends ConsumerWidget {
   const NeuTextField({
@@ -14,6 +15,7 @@ class NeuTextField extends ConsumerWidget {
     required this.validator,
     this.obscureText = false,
   });
+
   final String label;
   final TextEditingController? controller;
   final TextInputType keyboardType;
@@ -28,17 +30,17 @@ class NeuTextField extends ConsumerWidget {
       children: [
         Text(
           label,
-          style: Theme.of(
-            context,
-          ).textTheme.labelLarge!.copyWith(color: AppColors.lightTextColor),
+          style: Theme.of(context).textTheme.labelLarge!.copyWith(
+            color: AppColors.lightTextColor,
+            fontSize: 16.sp,
+          ),
         ),
-
-        SizedBox(height: 5),
+        SizedBox(height: 5.h),
         Neumorphic(
           style: NeumorphicStyle(
             depth: -6,
             intensity: 0.8,
-            boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(12)),
+            boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(12.r)),
             lightSource: LightSource.topLeft,
             color: AppColors.lightWhite,
             shadowLightColor: AppColors.shadowLight,
@@ -53,9 +55,9 @@ class NeuTextField extends ConsumerWidget {
             validator: validator,
             decoration: InputDecoration(
               border: InputBorder.none,
-              contentPadding: const EdgeInsets.symmetric(
-                horizontal: 10,
-                vertical: 15,
+              contentPadding: EdgeInsets.symmetric(
+                horizontal: 10.w,
+                vertical: 15.h,
               ),
             ),
           ),
@@ -75,6 +77,7 @@ class NeuPhoneTextField extends ConsumerWidget {
     required this.validator,
     this.obscureText = false,
   });
+
   final String label;
   final TextEditingController? controller;
   final TextInputType keyboardType;
@@ -89,24 +92,24 @@ class NeuPhoneTextField extends ConsumerWidget {
       children: [
         Text(
           label,
-          style: Theme.of(
-            context,
-          ).textTheme.labelLarge!.copyWith(color: AppColors.lightTextColor),
+          style: Theme.of(context).textTheme.labelLarge!.copyWith(
+            color: AppColors.lightTextColor,
+            fontSize: 16.sp,
+          ),
         ),
-
-        SizedBox(height: 5),
+        SizedBox(height: 5.h),
         Neumorphic(
           style: NeumorphicStyle(
             depth: -6,
             intensity: 0.8,
-            boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(12)),
+            boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(12.r)),
             lightSource: LightSource.topLeft,
             color: AppColors.lightWhite,
             shadowLightColor: AppColors.shadowLight,
             shadowLightColorEmboss: AppColors.embossLight,
           ),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            padding: EdgeInsets.symmetric(horizontal: 20.w),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -119,33 +122,39 @@ class NeuPhoneTextField extends ConsumerWidget {
                   favorite: const ['+91', 'IN'],
                   showCountryOnly: false,
                   flagDecoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
+                    borderRadius: BorderRadius.circular(5.r),
                   ),
                   builder: (country) {
                     return Row(
                       children: [
                         ClipRRect(
-                          borderRadius: BorderRadius.circular(5),
+                          borderRadius: BorderRadius.circular(5.r),
                           child: Image.asset(
                             country!.flagUri.toString(),
                             package: 'country_code_picker',
                             fit: BoxFit.contain,
-                            width: 25,
+                            width: 25.w,
                           ),
                         ),
-                        const SizedBox(width: 5),
+                        SizedBox(width: 5.w),
                         RotatedBox(
                           quarterTurns: 1,
-                          child: Icon(Icons.chevron_right_rounded, size: 22),
+                          child: Icon(Icons.chevron_right_rounded, size: 22.sp),
                         ),
                         RotatedBox(
                           quarterTurns: 1,
-                          child: SizedBox(width: 25, child: Divider()),
+                          child: SizedBox(
+                            width: 25.w,
+                            child: Divider(thickness: 1.h),
+                          ),
                         ),
                         Text(
                           country.toString(),
                           style: Theme.of(context).textTheme.bodyMedium!
-                              .copyWith(color: AppColors.lightTextColor),
+                              .copyWith(
+                                color: AppColors.lightTextColor,
+                                fontSize: 14.sp,
+                              ),
                         ),
                       ],
                     );
@@ -161,9 +170,9 @@ class NeuPhoneTextField extends ConsumerWidget {
                     validator: validator,
                     decoration: InputDecoration(
                       border: InputBorder.none,
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 15,
+                      contentPadding: EdgeInsets.symmetric(
+                        horizontal: 10.w,
+                        vertical: 15.h,
                       ),
                     ),
                   ),

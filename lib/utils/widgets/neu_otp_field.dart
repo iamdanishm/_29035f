@@ -4,6 +4,7 @@ import 'package:_29035f/utils/app_colors.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class TrueEmbossedOtp extends ConsumerStatefulWidget {
   final int fieldCount;
@@ -70,9 +71,7 @@ class _TrueEmbossedOtpState extends ConsumerState<TrueEmbossedOtp> {
       FocusScope.of(context).unfocus();
       log("UI OTP 2: $otp");
 
-      if (widget.onSubmit != null) {
-        widget.onSubmit!(otp);
-      }
+      widget.onSubmit?.call(otp);
 
       setState(() {
         _isSubmitting = false;
@@ -86,10 +85,10 @@ class _TrueEmbossedOtpState extends ConsumerState<TrueEmbossedOtp> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: List.generate(widget.fieldCount, (index) {
         return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8),
+          padding: EdgeInsets.symmetric(horizontal: 8.w),
           child: SizedBox(
-            width: 60,
-            height: 60,
+            width: 60.w,
+            height: 60.w,
             child: Neumorphic(
               style: NeumorphicStyle(
                 depth: widget.enable ? -6 : -2,
@@ -99,7 +98,7 @@ class _TrueEmbossedOtpState extends ConsumerState<TrueEmbossedOtp> {
                 shadowLightColor: AppColors.shadowLight,
                 shadowLightColorEmboss: AppColors.embossLight,
                 boxShape: NeumorphicBoxShape.roundRect(
-                  const BorderRadius.all(Radius.circular(16)),
+                  BorderRadius.all(Radius.circular(16.r)),
                 ),
                 lightSource: LightSource.topLeft,
                 shape: NeumorphicShape.flat,
@@ -116,9 +115,7 @@ class _TrueEmbossedOtpState extends ConsumerState<TrueEmbossedOtp> {
                         context,
                       ).requestFocus(textFieldFocusNodes[index - 1]);
                       controllers[index - 1].clear();
-                      if (widget.onDigitChanged != null) {
-                        widget.onDigitChanged!(index - 1, '');
-                      }
+                      widget.onDigitChanged?.call(index - 1, '');
                     }
                   },
                   child: TextField(
@@ -127,8 +124,8 @@ class _TrueEmbossedOtpState extends ConsumerState<TrueEmbossedOtp> {
                     focusNode: textFieldFocusNodes[index],
                     textAlign: TextAlign.center,
                     maxLength: 1,
-                    style: const TextStyle(
-                      fontSize: 20,
+                    style: TextStyle(
+                      fontSize: 20.sp,
                       fontWeight: FontWeight.bold,
                     ),
                     decoration: const InputDecoration(
@@ -137,9 +134,7 @@ class _TrueEmbossedOtpState extends ConsumerState<TrueEmbossedOtp> {
                     ),
                     keyboardType: TextInputType.number,
                     onChanged: (val) {
-                      if (widget.onDigitChanged != null) {
-                        widget.onDigitChanged!(index, val);
-                      }
+                      widget.onDigitChanged?.call(index, val);
                       if (val.isNotEmpty) {
                         if (index < widget.fieldCount - 1) {
                           FocusScope.of(

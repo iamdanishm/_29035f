@@ -2,6 +2,7 @@ import 'package:_29035f/utils/app_colors.dart';
 import 'package:_29035f/utils/widgets/neu_button.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class NeuDialog extends ConsumerWidget {
   const NeuDialog({
@@ -13,6 +14,7 @@ class NeuDialog extends ConsumerWidget {
     this.buttonTextColor,
     this.onPressed,
   });
+
   final String title;
   final TextStyle? titleStyle;
   final String description;
@@ -26,7 +28,7 @@ class NeuDialog extends ConsumerWidget {
       child: Neumorphic(
         style: NeumorphicStyle(
           shape: NeumorphicShape.concave,
-          boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(15)),
+          boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(15.r)),
           depth: 6,
           intensity: 0.6,
           shadowLightColor: AppColors.shadowLight,
@@ -34,31 +36,28 @@ class NeuDialog extends ConsumerWidget {
           color: AppColors.primaryColor,
         ),
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: EdgeInsets.all(16.w),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(title, style: titleStyle),
-              const SizedBox(height: 16),
+              SizedBox(height: 16.h),
               Text(
                 description,
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.labelLarge,
               ),
-              const SizedBox(height: 16),
-              Visibility(
-                visible: buttonText != null,
-                replacement: const SizedBox(),
-                child: NeuButton(
-                  title: buttonText ?? '',
+              SizedBox(height: 16.h),
+              if (buttonText != null)
+                NeuButton(
+                  title: buttonText!,
                   shadowLightColor: AppColors.shadowLight,
                   color: AppColors.embossLight,
                   titleColor: buttonTextColor ?? AppColors.textColor,
-                  width: MediaQuery.of(context).size.width / 3.5,
-                  height: 50,
+                  width: 0.3.sw,
+                  height: 50.h,
                   onPressed: onPressed ?? () {},
                 ),
-              ),
             ],
           ),
         ),
