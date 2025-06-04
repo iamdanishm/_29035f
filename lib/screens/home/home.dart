@@ -31,117 +31,147 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final percentage = ref.watch(progressProvider);
 
     return Scaffold(
-      // appBar: AppBar(
-      //   leading: Padding(
-      //     padding: const EdgeInsets.only(left: 30),
-      //     child: NeuBackBtn(),
-      //   ),
-      //   leadingWidth: 80.w,
-      //   centerTitle: true,
-      //   title: Text('Home'),
-      //   forceMaterialTransparency: true,
-      //   clipBehavior: Clip.none,
-      // ),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 30.h),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(
-                height: 520.h,
-                child: Neumorphic(
-                  style: NeumorphicStyle(
-                    shape: NeumorphicShape.concave,
-                    boxShape: NeumorphicBoxShape.roundRect(
-                      BorderRadius.circular(24.r),
-                    ),
-                    depth: 6.r.clamp(2, 6),
-                    intensity: 0.6,
-                    shadowLightColor: AppColors.lightWhite,
-                    lightSource: LightSource.topLeft,
-                    color: Color(0xFFF2F3F6),
-                  ),
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: 330.h,
-                        child: NeuCircularProgress(percentage: percentage),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 20.h),
+                child: Stack(
+                  children: [
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: NeumorphicButton(
+                        style: NeumorphicStyle(
+                          depth: 6,
+                          intensity: 0.5,
+                          boxShape: NeumorphicBoxShape.roundRect(
+                            BorderRadius.circular(10.r),
+                          ),
+                          lightSource: LightSource.topLeft,
+                          color: AppColors.lightWhite,
+                          shadowLightColor: AppColors.shadowLight,
+                          shadowLightColorEmboss: AppColors.embossLight,
+                        ),
+                        padding: EdgeInsets.all(14.h),
+                        child: Image.asset(
+                          'assets/images/icons/menu.png',
+                          width: 26.h,
+                          height: 26.h,
+                          fit: BoxFit.contain,
+                        ),
+                        onPressed: () {},
                       ),
-                      Text(
-                        "Realm Deviation",
+                    ),
+
+                    Align(
+                      alignment: Alignment.center,
+                      heightFactor: 1.8,
+                      child: Text(
+                        "Welcome",
                         style: Theme.of(context).textTheme.titleLarge,
                       ),
+                    ),
+                  ],
+                ),
+              ),
 
-                      SizedBox(height: 10.h),
+              Neumorphic(
+                style: NeumorphicStyle(
+                  shape: NeumorphicShape.concave,
+                  boxShape: NeumorphicBoxShape.roundRect(
+                    BorderRadius.circular(24.r),
+                  ),
+                  depth: 7,
+                  intensity: 0.7,
+                  shadowLightColor: AppColors.lightWhite,
+                  lightSource: LightSource.topLeft,
+                  color: Color(0xFFF2F3F6),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      height: 330.h,
+                      child: NeuCircularProgress(percentage: percentage),
+                    ),
+                    Text(
+                      "Realm Deviation",
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
 
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        spacing: 40.w,
-                        children: [
-                          Row(
-                            spacing: 8.w,
-                            children: [
-                              Container(
-                                height: 16.h,
-                                width: 16.w,
-                                decoration: BoxDecoration(
-                                  color: Color(0xFFC5DAE9),
-                                  shape: BoxShape.circle,
-                                ),
-                              ),
+                    SizedBox(height: 10.h),
 
-                              Text(
-                                "Work",
-                                style: Theme.of(context).textTheme.bodyLarge!
-                                    .copyWith(fontWeight: FontWeight.bold),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      spacing: 40.w,
+                      children: [
+                        Row(
+                          spacing: 8.w,
+                          children: [
+                            Container(
+                              height: 16.h,
+                              width: 16.w,
+                              decoration: BoxDecoration(
+                                color: Color(0xFFC5DAE9),
+                                shape: BoxShape.circle,
                               ),
-                            ],
-                          ),
-                          Row(
-                            spacing: 8.w,
-                            children: [
-                              Container(
-                                height: 16.h,
-                                width: 16.w,
-                                decoration: BoxDecoration(
-                                  color: Color(0xFF81B5DC),
-                                  shape: BoxShape.circle,
-                                ),
-                              ),
+                            ),
 
-                              Text(
-                                "Life",
-                                style: Theme.of(context).textTheme.bodyLarge!
-                                    .copyWith(fontWeight: FontWeight.bold),
+                            Text(
+                              "Work",
+                              style: Theme.of(context).textTheme.bodyLarge!
+                                  .copyWith(fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          spacing: 8.w,
+                          children: [
+                            Container(
+                              height: 16.h,
+                              width: 16.w,
+                              decoration: BoxDecoration(
+                                color: Color(0xFF81B5DC),
+                                shape: BoxShape.circle,
                               ),
-                            ],
-                          ),
-                          Row(
-                            spacing: 8.w,
-                            children: [
-                              Container(
-                                height: 16.h,
-                                width: 16.w,
-                                decoration: BoxDecoration(
-                                  color: Color(0xFF4E97CE),
-                                  shape: BoxShape.circle,
-                                ),
-                              ),
+                            ),
 
-                              Text(
-                                "Soul",
-                                style: Theme.of(context).textTheme.bodyLarge!
-                                    .copyWith(fontWeight: FontWeight.bold),
+                            Text(
+                              "Life",
+                              style: Theme.of(context).textTheme.bodyLarge!
+                                  .copyWith(fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          spacing: 8.w,
+                          children: [
+                            Container(
+                              height: 16.h,
+                              width: 16.w,
+                              decoration: BoxDecoration(
+                                color: Color(0xFF4E97CE),
+                                shape: BoxShape.circle,
                               ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 40.h),
+                            ),
 
-                      SizedBox(
+                            Text(
+                              "Soul",
+                              style: Theme.of(context).textTheme.bodyLarge!
+                                  .copyWith(fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+
+                    Padding(
+                      padding: EdgeInsets.only(top: 40.h, bottom: 30.h),
+                      child: SizedBox(
                         height: 80.h,
                         width: double.infinity,
                         child: CustomPaint(
@@ -153,8 +183,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           ),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ],
