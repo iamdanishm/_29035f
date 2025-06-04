@@ -16,7 +16,7 @@ class ProgressArcPainter extends CustomPainter {
 
     final paint = Paint()
       ..color = AppColors.accentColor
-      ..strokeWidth = 10.w
+      ..strokeWidth = 10.r
       ..style = PaintingStyle.stroke;
 
     double angle = 2 * pi * (percentage / 100);
