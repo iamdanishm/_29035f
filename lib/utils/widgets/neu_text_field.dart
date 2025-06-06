@@ -14,6 +14,7 @@ class NeuTextField extends ConsumerWidget {
     required this.onChanged,
     required this.validator,
     this.obscureText = false,
+    this.labelColor = AppColors.lightTextColor,
   });
 
   final String label;
@@ -22,6 +23,7 @@ class NeuTextField extends ConsumerWidget {
   final Function(String)? onChanged;
   final FormFieldValidator validator;
   final bool obscureText;
+  final Color labelColor;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -30,10 +32,9 @@ class NeuTextField extends ConsumerWidget {
       children: [
         Text(
           label,
-          style: Theme.of(context).textTheme.labelLarge!.copyWith(
-            color: AppColors.lightTextColor,
-            fontSize: 16.sp,
-          ),
+          style: Theme.of(
+            context,
+          ).textTheme.titleMedium!.copyWith(color: labelColor),
         ),
         SizedBox(height: 5.h),
         Neumorphic(
@@ -92,10 +93,9 @@ class NeuPhoneTextField extends ConsumerWidget {
       children: [
         Text(
           label,
-          style: Theme.of(context).textTheme.labelLarge!.copyWith(
-            color: AppColors.lightTextColor,
-            fontSize: 16.sp,
-          ),
+          style: Theme.of(
+            context,
+          ).textTheme.titleMedium!.copyWith(color: AppColors.lightTextColor),
         ),
         SizedBox(height: 5.h),
         Neumorphic(

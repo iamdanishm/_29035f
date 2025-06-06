@@ -1,3 +1,4 @@
+import 'package:_29035f/routes/bottom_nav.dart';
 import 'package:_29035f/screens/auth/forgot_password/fp_email.dart';
 import 'package:_29035f/screens/auth/forgot_password/fp_resend.dart';
 import 'package:_29035f/screens/auth/login.dart';
@@ -5,12 +6,13 @@ import 'package:_29035f/screens/auth/otp_verification/verify_otp.dart';
 import 'package:_29035f/screens/auth/register.dart';
 import 'package:_29035f/screens/auth/reset_password.dart';
 import 'package:_29035f/screens/home/home.dart';
+import 'package:_29035f/screens/profile/profile.dart';
 import 'package:_29035f/screens/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 final GoRouter router = GoRouter(
-  initialLocation: '/home',
+  initialLocation: '/bottom_nav',
   debugLogDiagnostics: true,
   routes: <GoRoute>[
     GoRoute(
@@ -64,10 +66,24 @@ final GoRouter router = GoRouter(
     ),
 
     GoRoute(
+      path: "/bottom_nav",
+      name: "bottom_nav",
+      builder: (BuildContext context, GoRouterState state) {
+        return BottomNav();
+      },
+    ),
+    GoRoute(
       path: "/home",
       name: "home",
       builder: (BuildContext context, GoRouterState state) {
         return HomeScreen();
+      },
+    ),
+    GoRoute(
+      path: "/profile",
+      name: "profile",
+      builder: (BuildContext context, GoRouterState state) {
+        return Profile();
       },
     ),
   ],

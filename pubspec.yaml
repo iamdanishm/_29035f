@@ -35,5 +35,6 @@ flutter:
   assets:
     - assets/images/
     - assets/images/icons/
+    - assets/images/bottom_nav/
     - assets/images/illustrations/
     - assets/images/splash_illustration/
