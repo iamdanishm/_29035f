@@ -91,8 +91,8 @@ class RegisterController extends AsyncNotifier<void> {
 
       await Future.delayed(const Duration(seconds: 1));
       state = const AsyncData(null);
-    } catch (e) {
-      AsyncError(e, StackTrace.current);
+    } catch (e, st) {
+      state = AsyncError(e, st);
     }
   }
 }

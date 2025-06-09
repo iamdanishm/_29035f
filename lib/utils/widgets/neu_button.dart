@@ -7,7 +7,7 @@ class NeuButton extends ConsumerWidget {
     super.key,
     required this.title,
     required this.onPressed,
-    required this.width,
+    this.width,
     required this.height,
     required this.shadowLightColor,
     required this.color,
@@ -15,7 +15,7 @@ class NeuButton extends ConsumerWidget {
   });
   final String title;
   final Function()? onPressed;
-  final double width;
+  final double? width;
   final double height;
   final Color shadowLightColor;
   final Color color;

@@ -5,6 +5,8 @@ import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+//TODO: WORKING ON THIS ON MAC
+
 class Profile extends ConsumerStatefulWidget {
   const Profile({super.key});
 
@@ -74,7 +76,6 @@ class _ProfileState extends ConsumerState<Profile> {
                       keyboardType: TextInputType.phone,
                       onChanged: (text) {},
                       validator: (text) => null,
-                      // TODO: add date of birth field
                     ),
                     NeuTextField(
                       label: "Current Role / Title",

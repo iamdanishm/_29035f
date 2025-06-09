@@ -5,6 +5,8 @@ import 'package:_29035f/screens/auth/login.dart';
 import 'package:_29035f/screens/auth/otp_verification/verify_otp.dart';
 import 'package:_29035f/screens/auth/register.dart';
 import 'package:_29035f/screens/auth/reset_password.dart';
+import 'package:_29035f/screens/concept/concept.dart';
+import 'package:_29035f/screens/contact/contact.dart';
 import 'package:_29035f/screens/home/home.dart';
 import 'package:_29035f/screens/profile/profile.dart';
 import 'package:_29035f/screens/splash.dart';
@@ -86,12 +88,30 @@ final GoRouter router = GoRouter(
         return Profile();
       },
     ),
+    GoRoute(
+      path: "/concept",
+      name: "concept",
+      builder: (BuildContext context, GoRouterState state) {
+        return Concept();
+      },
+    ),
+    GoRoute(
+      path: "/contact",
+      name: "contact",
+      builder: (BuildContext context, GoRouterState state) {
+        return Contact();
+      },
+    ),
   ],
   errorBuilder: (context, state) => Scaffold(
-    body: Center(
-      child: Text(
-        '🥺No route defined for ${state.uri}',
-        style: Theme.of(context).textTheme.titleLarge,
+    body: Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Center(
+        child: Text(
+          '🥺No route defined for ${state.uri}',
+          textAlign: TextAlign.center,
+          style: Theme.of(context).textTheme.headlineMedium,
+        ),
       ),
     ),
   ),

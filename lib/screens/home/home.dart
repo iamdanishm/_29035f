@@ -25,7 +25,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       "title": "Concepts",
       "description": "Understand the “why” and “how”",
       "icon": "assets/images/icons/concept.png",
-      "route": "/concepts",
+      "route": "/concept",
     },
     {
       "id": 2,
