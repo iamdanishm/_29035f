@@ -18,10 +18,10 @@ class BottomNav extends ConsumerStatefulWidget {
 class _BottomNavState extends ConsumerState<BottomNav> {
   List bottomNavWidget = [
     SafeArea(child: HomeScreen()),
-    SafeArea(child: Text("Compass Navigator")),
-    Text("Mission Control"),
-    Text("Daily GPS"),
-    Text("Practice Labs"),
+    SafeArea(child: Center(child: Text("Compass Navigator"))),
+    SafeArea(child: Center(child: Text("Mission Control"))),
+    SafeArea(child: Center(child: Text("Daily GPS"))),
+    SafeArea(child: Center(child: Text("Practice Labs"))),
   ];
 
   List bottomNavList = [

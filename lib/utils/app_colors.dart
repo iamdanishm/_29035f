@@ -13,5 +13,5 @@ class AppColors {
   static const embossLight = Color(0xFFF1F2F6);
   static const errorColor = Color(0xFFFF3333);
   static const accentColor = Color(0xFFC5DAE9);
-  static const nueCardBg = Color(0xFFF2F3F6);
+  static const nueCardBg = Color(0xFFFFFFFF);
 }

@@ -39,7 +39,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       "title": "FAQs",
       "description": "Answers to your common questions.",
       "icon": "assets/images/icons/faq.png",
-      "route": "/faqs",
+      "route": "/faq",
     },
     {
       "id": 4,
@@ -161,7 +161,7 @@ class HomeNueCard extends StatelessWidget {
 }
 
 class HomeProgress extends StatelessWidget {
-  const HomeProgress({super.key, required this.percentage});
+  const HomeProgress({super.key, this.percentage = 0});
 
   final double percentage;
 
@@ -177,7 +177,7 @@ class HomeProgress extends StatelessWidget {
         shadowDarkColor: AppColors.shadowLight,
         shadowLightColorEmboss: AppColors.embossLight,
         shadowDarkColorEmboss: AppColors.embossLight,
-        color: AppColors.nueCardBg,
+        color: Color(0xFFF2F3F6),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,

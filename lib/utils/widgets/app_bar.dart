@@ -30,11 +30,11 @@ class HomeAppBar extends ConsumerWidget {
                 shadowLightColor: AppColors.shadowLight,
                 shadowLightColorEmboss: AppColors.embossLight,
               ),
-              padding: EdgeInsets.all(14.h),
+              padding: EdgeInsets.all(12.h),
               child: Image.asset(
                 'assets/images/icons/menu.png',
-                width: 26.h,
-                height: 26.h,
+                width: 22.h,
+                height: 22.h,
                 fit: BoxFit.contain,
               ),
               onPressed: () {
@@ -50,8 +50,9 @@ class HomeAppBar extends ConsumerWidget {
 }
 
 class CommanAppBar extends ConsumerWidget {
-  const CommanAppBar({super.key, required this.title});
+  const CommanAppBar({super.key, required this.title, this.actionWidget});
   final String title;
+  final Widget? actionWidget;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -71,14 +72,15 @@ class CommanAppBar extends ConsumerWidget {
                 ),
                 lightSource: LightSource.topLeft,
                 color: AppColors.lightWhite,
+                // color: AppColors.lightWhite,
                 shadowLightColor: AppColors.shadowLight,
                 shadowLightColorEmboss: AppColors.embossLight,
               ),
-              padding: EdgeInsets.all(14.h),
+              padding: EdgeInsets.all(12.h),
               child: Image.asset(
                 'assets/images/icons/back-arrow.png',
-                width: 26.h,
-                height: 26.h,
+                width: 22.h,
+                height: 22.h,
                 fit: BoxFit.contain,
               ),
               onPressed: () {
@@ -86,7 +88,19 @@ class CommanAppBar extends ConsumerWidget {
               },
             ),
           ),
-          Text(title, style: Theme.of(context).textTheme.titleLarge),
+          SizedBox(
+            width: 200.w,
+            child: Text(
+              title,
+              style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                color: AppColors.textColor,
+                fontSize: 20.spMin,
+              ),
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+          actionWidget ?? const SizedBox.shrink(),
         ],
       ),
     );

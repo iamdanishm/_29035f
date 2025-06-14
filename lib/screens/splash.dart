@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:_29035f/utils/app_colors.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -36,7 +37,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
     super.initState();
     Future.delayed(const Duration(seconds: 3)).then((_) {
       if (mounted) {
-        context.go('/home');
+        context.go('/bottom_nav');
       }
     });
   }
@@ -68,7 +69,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                 padding: EdgeInsets.all(50.w),
                 child: Image.asset(image, fit: BoxFit.contain),
               ),
-            ),
+            ).animate().fadeIn(duration: 2.seconds),
           ),
         ),
       ),

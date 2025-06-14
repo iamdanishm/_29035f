@@ -15,6 +15,8 @@ class NeuTextField extends ConsumerWidget {
     required this.validator,
     this.obscureText = false,
     this.labelColor = AppColors.lightTextColor,
+    this.hintText,
+    this.maxLine = 1,
   });
 
   final String label;
@@ -24,6 +26,8 @@ class NeuTextField extends ConsumerWidget {
   final FormFieldValidator validator;
   final bool obscureText;
   final Color labelColor;
+  final String? hintText;
+  final int maxLine;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -37,28 +41,38 @@ class NeuTextField extends ConsumerWidget {
           ).textTheme.titleMedium!.copyWith(color: labelColor),
         ),
         SizedBox(height: 5.h),
-        Neumorphic(
-          style: NeumorphicStyle(
-            depth: -6,
-            intensity: 0.8,
-            boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(12.r)),
-            lightSource: LightSource.topLeft,
-            color: AppColors.lightWhite,
-            shadowLightColor: AppColors.shadowLight,
-            shadowLightColorEmboss: AppColors.embossLight,
-          ),
-          child: TextFormField(
-            controller: controller,
-            keyboardType: keyboardType,
-            onChanged: onChanged,
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            obscureText: obscureText,
-            validator: validator,
-            decoration: InputDecoration(
-              border: InputBorder.none,
-              contentPadding: EdgeInsets.symmetric(
-                horizontal: 10.w,
-                vertical: 15.h,
+        SizedBox(
+          height: null,
+          child: Neumorphic(
+            style: NeumorphicStyle(
+              depth: -6,
+              intensity: 0.8,
+              boxShape: NeumorphicBoxShape.roundRect(
+                BorderRadius.circular(12.r),
+              ),
+              lightSource: LightSource.topLeft,
+              color: AppColors.lightWhite,
+              shadowLightColor: AppColors.shadowLight,
+              shadowLightColorEmboss: AppColors.embossLight,
+            ),
+            child: TextFormField(
+              controller: controller,
+              keyboardType: keyboardType,
+              onChanged: onChanged,
+              maxLines: maxLine,
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              obscureText: obscureText,
+              validator: validator,
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                hintText: hintText,
+                hintStyle: Theme.of(
+                  context,
+                ).textTheme.labelLarge!.copyWith(color: AppColors.shadowDark),
+                contentPadding: EdgeInsets.symmetric(
+                  horizontal: 10.w,
+                  vertical: 15.h,
+                ),
               ),
             ),
           ),

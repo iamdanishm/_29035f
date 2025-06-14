@@ -12,6 +12,7 @@ class NeuButton extends ConsumerWidget {
     required this.shadowLightColor,
     required this.color,
     required this.titleColor,
+    this.boxShape,
   });
   final String title;
   final Function()? onPressed;
@@ -20,6 +21,7 @@ class NeuButton extends ConsumerWidget {
   final Color shadowLightColor;
   final Color color;
   final Color titleColor;
+  final NeumorphicBoxShape? boxShape;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -35,7 +37,9 @@ class NeuButton extends ConsumerWidget {
           shadowLightColor: shadowLightColor,
           color: color,
           lightSource: LightSource.topLeft,
-          boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(50.r)),
+          boxShape:
+              boxShape ??
+              NeumorphicBoxShape.roundRect(BorderRadius.circular(50.r)),
         ),
         child: Center(
           child: Text(

@@ -7,9 +7,11 @@ import 'package:_29035f/screens/auth/register.dart';
 import 'package:_29035f/screens/auth/reset_password.dart';
 import 'package:_29035f/screens/concept/concept.dart';
 import 'package:_29035f/screens/contact/contact.dart';
+import 'package:_29035f/screens/faq/faq.dart';
 import 'package:_29035f/screens/home/home.dart';
 import 'package:_29035f/screens/profile/profile.dart';
 import 'package:_29035f/screens/splash.dart';
+import 'package:_29035f/screens/subscription/subscription.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -93,6 +95,20 @@ final GoRouter router = GoRouter(
       name: "concept",
       builder: (BuildContext context, GoRouterState state) {
         return Concept();
+      },
+    ),
+    GoRoute(
+      path: "/subscription",
+      name: "subscription",
+      builder: (BuildContext context, GoRouterState state) {
+        return Subscription();
+      },
+    ),
+    GoRoute(
+      path: "/faq",
+      name: "faq",
+      builder: (BuildContext context, GoRouterState state) {
+        return Faq();
       },
     ),
     GoRoute(

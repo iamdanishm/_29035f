@@ -1,36 +1,85 @@
-class ConceptItem {
-  final String header;
-  final String body;
-  final String image;
-  final bool isExpanded;
+class ConceptResponse {
+  bool status;
+  String message;
+  List<ConceptItem> data;
+  Pagination pagination;
 
-  ConceptItem({
-    required this.header,
-    required this.body,
-    required this.image,
-    this.isExpanded = false,
+  ConceptResponse({
+    required this.status,
+    required this.message,
+    required this.data,
+    required this.pagination,
   });
 
-  ConceptItem copyWith({
-    String? header,
-    String? body,
-    String? image,
-    bool? isExpanded,
-  }) {
-    return ConceptItem(
-      header: header ?? this.header,
-      body: body ?? this.body,
-      image: image ?? this.image,
-      isExpanded: isExpanded ?? this.isExpanded,
+  factory ConceptResponse.fromJson(Map<String, dynamic> json) {
+    return ConceptResponse(
+      status: json['status'],
+      message: json['message'],
+      data: List<ConceptItem>.from(
+        json['data'].map((x) => ConceptItem.fromJson(x)),
+      ),
+      pagination: Pagination.fromJson(json['pagination']),
     );
   }
+}
+
+class ConceptItem {
+  int id;
+  String title;
+  String description;
+  String image;
+  DateTime createdAt;
+  DateTime updatedAt;
+  String? imageUrl;
+
+  ConceptItem({
+    required this.id,
+    required this.title,
+    required this.description,
+    required this.image,
+    required this.createdAt,
+    required this.updatedAt,
+    this.imageUrl,
+  });
 
   factory ConceptItem.fromJson(Map<String, dynamic> json) {
     return ConceptItem(
-      header: json['header'] as String,
-      body: json['body'] as String,
-      image: json['image'] as String,
-      isExpanded: false, // Always initialize to false when loading from API
+      id: json['id'],
+      title: json['title'],
+      description: json['description'],
+      image: json['image'],
+      createdAt: DateTime.parse(json['created_at']),
+      updatedAt: DateTime.parse(json['updated_at']),
+      imageUrl: json['image_url'] as String?,
+    );
+  }
+}
+
+class Pagination {
+  int total;
+  int perPage;
+  int currentPage;
+  int lastPage;
+  String? nextPageUrl;
+  String? prevPageUrl;
+
+  Pagination({
+    required this.total,
+    required this.perPage,
+    required this.currentPage,
+    required this.lastPage,
+    this.nextPageUrl,
+    this.prevPageUrl,
+  });
+
+  factory Pagination.fromJson(Map<String, dynamic> json) {
+    return Pagination(
+      total: json['total'],
+      perPage: json['per_page'],
+      currentPage: json['current_page'],
+      lastPage: json['last_page'],
+      nextPageUrl: json['next_page_url'] as String?,
+      prevPageUrl: json['prev_page_url'] as String?,
     );
   }
 }
