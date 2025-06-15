@@ -17,7 +17,7 @@ final conceptTextControllerProvider =
     });
 
 final paginatedConceptProvider =
-    StateNotifierProvider<
+    StateNotifierProvider.autoDispose<
       PaginatedConceptNotifier,
       AsyncValue<List<ConceptItem>>
     >((ref) => PaginatedConceptNotifier(ref));
@@ -60,6 +60,8 @@ class PaginatedConceptNotifier
       _allConcepts.addAll(response.data);
       _currentPage++;
       _hasMore = response.pagination.nextPageUrl != null;
+
+      state = AsyncData(List.from(_allConcepts));
     } catch (e, st) {
       state = AsyncError(e, st);
     } finally {

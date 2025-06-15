@@ -1,9 +1,10 @@
 import 'package:_29035f/model/concept.dart';
 import 'package:_29035f/providers/concept/concept_provider.dart';
-import 'package:_29035f/providers/read_more_provider.dart';
+import 'package:_29035f/providers/debounce_provider.dart';
 import 'package:_29035f/utils/app_colors.dart';
 import 'package:_29035f/utils/widgets/app_bar.dart';
 import 'package:_29035f/utils/widgets/neu_expandable.dart';
+import 'package:_29035f/utils/widgets/neu_loading.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -20,6 +21,39 @@ class _ConceptState extends ConsumerState<Concept> {
   final isShowProvider = StateProvider<bool>((ref) => false);
   final isSelectedProvider = StateProvider<String>((ref) => '');
   final isReadMoreProvider = StateProvider<bool>((ref) => false);
+  final ScrollController scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    scrollController.addListener(onScroll);
+  }
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
+  }
+
+  void onScroll() {
+    final query = ref.read(conceptSearchQueryProvider);
+    if (query.isEmpty &&
+        scrollController.position.pixels >=
+            scrollController.position.maxScrollExtent - 300) {
+      ref.read(paginatedConceptProvider.notifier).fetchConcepts();
+    }
+  }
+
+  Future onRefresh() async {
+    ref.read(conceptSearchQueryProvider.notifier).state = '';
+    ref.read(conceptTextControllerProvider).clear();
+
+    final notifier = ref.refresh(paginatedConceptProvider.notifier);
+
+    if (!ref.context.mounted) return;
+
+    await notifier.fetchConcepts();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,55 +63,91 @@ class _ConceptState extends ConsumerState<Concept> {
 
     return Scaffold(
       body: SafeArea(
-        child: SingleChildScrollView(
-          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 20.h),
           child: Column(
             children: [
-              CommanAppBar(title: "Concept"),
-              SizedBox(height: 15.h),
-              NeuSearchBar(),
-              SizedBox(height: 10.h),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.h),
+                child: Column(
+                  children: [
+                    CommanAppBar(title: "Concept"),
+                    SizedBox(height: 15.h),
+                    NeuSearchBar(),
+                    SizedBox(height: 10.h),
+                  ],
+                ),
+              ),
 
-              conceptsAsync.when(
-                data: (conceptItems) {
-                  if (conceptItems.isEmpty) {
-                    return SizedBox(
-                      height: 1.sh - 250.h,
-                      child: Center(
-                        child: Text(
-                          'No concepts found',
-                          style: Theme.of(context).textTheme.headlineMedium,
-                        ),
-                      ),
-                    );
-                  }
-
-                  return ListView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: conceptItems.length,
-                    itemBuilder: (context, index) {
-                      final conceptItem = conceptItems[index];
-                      return Padding(
-                        padding: EdgeInsets.only(top: 20.h),
-                        child: ConceptTile(
-                          conceptItem: conceptItem,
-                          index: index,
-                          isShowProvider: isShowProvider,
-                          isReadMoreProvider: isReadMoreProvider,
-                          isSelectedProvider: isSelectedProvider,
-                        ),
+              Expanded(
+                child: RefreshIndicator.adaptive(
+                  onRefresh: onRefresh,
+                  child: conceptsAsync.when(
+                    data: (item) {
+                      return CustomScrollView(
+                        controller: scrollController,
+                        physics: const AlwaysScrollableScrollPhysics(),
+                        slivers: [
+                          SliverPadding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 20.h,
+                              vertical: 10.h,
+                            ),
+                            sliver: item.isEmpty
+                                ? SliverFillRemaining(
+                                    hasScrollBody: false,
+                                    child: Center(
+                                      child: Text(
+                                        'No Concepts found',
+                                        style: Theme.of(
+                                          context,
+                                        ).textTheme.headlineMedium,
+                                      ),
+                                    ),
+                                  )
+                                : SliverList(
+                                    delegate: SliverChildBuilderDelegate(
+                                      (context, index) => Padding(
+                                        padding: EdgeInsets.only(top: 20.h),
+                                        child: ConceptTile(
+                                          conceptItem: item[index],
+                                          index: index,
+                                          isShowProvider: isShowProvider,
+                                          isReadMoreProvider:
+                                              isReadMoreProvider,
+                                          isSelectedProvider:
+                                              isSelectedProvider,
+                                        ),
+                                      ),
+                                      childCount: item.length,
+                                    ),
+                                  ),
+                          ),
+                        ],
                       );
                     },
-                  );
-                },
-                loading: () => SizedBox(
-                  height: 1.sh - 250.h,
-                  child: const Center(child: CircularProgressIndicator()),
-                ),
-                error: (error, stack) => SizedBox(
-                  height: 1.sh - 250.h,
-                  child: Center(child: Text('Error: $error')),
+                    loading: () => CustomScrollView(
+                      slivers: [
+                        SliverFillRemaining(
+                          hasScrollBody: false,
+                          child: Center(child: NeuLoading()),
+                        ),
+                      ],
+                    ),
+                    error: (error, stack) => CustomScrollView(
+                      slivers: [
+                        SliverFillRemaining(
+                          hasScrollBody: false,
+                          child: Center(
+                            child: Text(
+                              'Error: $error',
+                              style: Theme.of(context).textTheme.headlineMedium,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ),
             ],
@@ -106,32 +176,47 @@ class ConceptTile extends ConsumerWidget {
     required this.isSelectedProvider,
   });
 
+  bool shouldShowReadMore(BuildContext context, String text) {
+    final TextSpan span = TextSpan(
+      text: text,
+      style: Theme.of(
+        context,
+      ).textTheme.labelLarge!.copyWith(color: AppColors.shadowDark),
+    );
+
+    final TextPainter tp =
+        TextPainter(text: span, textDirection: TextDirection.ltr, maxLines: 4)
+          ..layout(
+            maxWidth: MediaQuery.of(context).size.width - 60,
+          ); // approx padding
+
+    return tp.didExceedMaxLines;
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selected = ref.watch(isSelectedProvider);
     final isShow = ref.watch(isShowProvider);
     final isReadMore = ref.watch(isReadMoreProvider);
     final isExpanded = selected == index.toString() && isShow;
-    final shouldShowReadMore = ref.watch(
-      readMoreProvider(conceptItem.description),
-    );
-    // final shouldShowReadMore = shouldShowReadMore(context, conceptItem.title);
+    final isShowReadMore = shouldShowReadMore(context, conceptItem.description);
 
     return NeuExpandable(
       title: Text(
-        conceptItem.description,
+        conceptItem.title,
         style: Theme.of(context).textTheme.titleMedium,
       ),
       expandedChild: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (conceptItem.image != "")
+          if (conceptItem.imageUrl != "")
             Padding(
               padding: EdgeInsets.only(bottom: 15.h, top: 10.h),
               child: ClipRRect(
                 borderRadius: BorderRadiusGeometry.all(Radius.circular(10.r)),
 
                 child: CachedNetworkImage(
-                  imageUrl: conceptItem.image,
+                  imageUrl: conceptItem.imageUrl ?? "",
                   width: 1.sw,
                   fit: BoxFit.cover,
                   fadeInCurve: Curves.easeIn,
@@ -145,6 +230,14 @@ class ConceptTile extends ConsumerWidget {
                       ),
                     );
                   },
+                  errorWidget: (context, url, error) => Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    spacing: 10.h,
+                    children: [
+                      Icon(Icons.error, color: Colors.red, size: 40.sp),
+                      Text("Failed to load image"),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -157,7 +250,7 @@ class ConceptTile extends ConsumerWidget {
               context,
             ).textTheme.labelLarge!.copyWith(color: AppColors.shadowDark),
           ),
-          if (!isReadMore && shouldShowReadMore)
+          if (!isReadMore && isShowReadMore)
             Align(
               alignment: Alignment.centerLeft,
               child: Padding(
@@ -216,6 +309,11 @@ class NeuSearchBar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final debouncer = ref.read(
+      debouncerProvider(const Duration(milliseconds: 500)),
+    );
+    final controller = ref.watch(conceptTextControllerProvider);
+
     return Neumorphic(
       style: NeumorphicStyle(
         depth: -8,
@@ -227,8 +325,13 @@ class NeuSearchBar extends ConsumerWidget {
         shadowLightColorEmboss: Colors.white,
       ),
       child: TextField(
+        controller: controller,
         keyboardType: TextInputType.name,
-        onChanged: (text) {},
+        onChanged: (text) {
+          debouncer.run(() {
+            ref.read(conceptSearchQueryProvider.notifier).state = text.trim();
+          });
+        },
         decoration: InputDecoration(
           prefixIcon: Padding(
             padding: EdgeInsets.only(left: 15.w, right: 5.w),

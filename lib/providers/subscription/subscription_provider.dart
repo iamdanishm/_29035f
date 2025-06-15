@@ -16,9 +16,9 @@ final convertedPriceProvider = Provider.family<String, String>((ref, inrPrice) {
 
   switch (selectedCurrency) {
     case 'USD':
-      return '\$${converted.toStringAsFixed(2)}';
+      return '\$${converted.floor()}';
     case 'NZD':
-      return '\$${converted.toStringAsFixed(2)}';
+      return '\$${converted.floor()}';
     case 'INR':
     default:
       return '₹$inrPrice';

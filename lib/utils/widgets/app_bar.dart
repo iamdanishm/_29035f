@@ -3,6 +3,7 @@ import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class HomeAppBar extends ConsumerWidget {
   const HomeAppBar({super.key, required this.scaffoldKey, required this.title});
@@ -22,12 +23,13 @@ class HomeAppBar extends ConsumerWidget {
               style: NeumorphicStyle(
                 depth: 6,
                 intensity: 0.5,
+                shape: NeumorphicShape.concave,
                 boxShape: NeumorphicBoxShape.roundRect(
-                  BorderRadius.circular(15.r),
+                  BorderRadius.circular(10.r),
                 ),
                 lightSource: LightSource.topLeft,
                 color: AppColors.lightWhite,
-                shadowLightColor: AppColors.shadowLight,
+                shadowLightColor: Colors.white,
                 shadowLightColorEmboss: AppColors.embossLight,
               ),
               padding: EdgeInsets.all(12.h),
@@ -42,7 +44,22 @@ class HomeAppBar extends ConsumerWidget {
               },
             ),
           ),
-          Text(title, style: Theme.of(context).textTheme.titleLarge),
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+
+            children: [
+              Text(title, style: Theme.of(context).textTheme.titleLarge),
+              if (title == "Practical Labs")
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0, left: 5.0),
+                  child: Badge(
+                    backgroundColor: Color(0xFFF9817E),
+                    smallSize: 12,
+                  ),
+                ),
+            ],
+          ),
         ],
       ),
     );
@@ -65,15 +82,15 @@ class CommanAppBar extends ConsumerWidget {
             alignment: Alignment.centerLeft,
             child: NeumorphicButton(
               style: NeumorphicStyle(
-                depth: 6,
+                depth: 5,
                 intensity: 0.5,
+                shape: NeumorphicShape.concave,
                 boxShape: NeumorphicBoxShape.roundRect(
-                  BorderRadius.circular(15.r),
+                  BorderRadius.circular(10.r),
                 ),
                 lightSource: LightSource.topLeft,
                 color: AppColors.lightWhite,
-                // color: AppColors.lightWhite,
-                shadowLightColor: AppColors.shadowLight,
+                shadowLightColor: Colors.white,
                 shadowLightColorEmboss: AppColors.embossLight,
               ),
               padding: EdgeInsets.all(12.h),
@@ -88,18 +105,56 @@ class CommanAppBar extends ConsumerWidget {
               },
             ),
           ),
-          SizedBox(
-            width: 200.w,
-            child: Text(
-              title,
-              style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                color: AppColors.textColor,
-                fontSize: 20.spMin,
-              ),
-              textAlign: TextAlign.center,
-              overflow: TextOverflow.ellipsis,
+          if (title == "29035 Journal")
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                RichText(
+                  text: TextSpan(
+                    text: "29035",
+                    children: [
+                      TextSpan(
+                        text: "f ",
+                        style: GoogleFonts.passionsConflict(fontSize: 32.sp),
+                      ),
+
+                      TextSpan(
+                        text: "Journal",
+                        style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.textColor,
+                        ),
+                      ),
+                    ],
+                    style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.textColor,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0, left: 5.0),
+                  child: Badge(
+                    backgroundColor: Color(0xFFF9817E),
+                    smallSize: 12,
+                  ),
+                ),
+              ],
             ),
-          ),
+          if (title != "29035 Journal")
+            SizedBox(
+              width: 200.w,
+              child: Text(
+                title,
+                style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                  color: AppColors.textColor,
+                  fontSize: 20.spMin,
+                ),
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
           actionWidget ?? const SizedBox.shrink(),
         ],
       ),

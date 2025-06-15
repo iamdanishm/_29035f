@@ -16,9 +16,10 @@ final faqTextControllerProvider = Provider.autoDispose<TextEditingController>((
 });
 
 final paginatedFaqProvider =
-    StateNotifierProvider<PaginatedFaqNotifier, AsyncValue<List<FaqItem>>>(
-      (ref) => PaginatedFaqNotifier(ref),
-    );
+    StateNotifierProvider.autoDispose<
+      PaginatedFaqNotifier,
+      AsyncValue<List<FaqItem>>
+    >((ref) => PaginatedFaqNotifier(ref));
 
 class PaginatedFaqNotifier extends StateNotifier<AsyncValue<List<FaqItem>>> {
   PaginatedFaqNotifier(this.ref) : super(const AsyncLoading()) {

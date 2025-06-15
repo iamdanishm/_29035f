@@ -1,4 +1,5 @@
 import 'package:_29035f/screens/home/home.dart';
+import 'package:_29035f/screens/practical_lab/practical_lab.dart';
 import 'package:_29035f/utils/app_colors.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -21,7 +22,7 @@ class _BottomNavState extends ConsumerState<BottomNav> {
     SafeArea(child: Center(child: Text("Compass Navigator"))),
     SafeArea(child: Center(child: Text("Mission Control"))),
     SafeArea(child: Center(child: Text("Daily GPS"))),
-    SafeArea(child: Center(child: Text("Practice Labs"))),
+    SafeArea(child: PracticalLab()),
   ];
 
   List bottomNavList = [
@@ -49,27 +50,33 @@ class _BottomNavState extends ConsumerState<BottomNav> {
     return Scaffold(
       key: scaffoldKey,
       drawer: MyDrawer(),
-      bottomNavigationBar: ClipRRect(
-        borderRadius: BorderRadius.horizontal(
-          left: Radius.circular(20.r),
-          right: Radius.circular(20.r),
-        ),
-        child: BottomAppBar(
-          height: 115.h,
+      bottomNavigationBar: Container(
+        padding: EdgeInsets.all(10.h),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.horizontal(
+            left: Radius.circular(20.r),
+            right: Radius.circular(20.r),
+          ),
           color: Colors.white,
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            spacing: 0,
-            children: List.generate(
-              bottomNavList.length,
-              (index) => Flexible(
-                fit: FlexFit.tight,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    IconButton(
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          spacing: 0,
+          children: List.generate(
+            bottomNavList.length,
+            (index) => Flexible(
+              fit: FlexFit.tight,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    decoration: BoxDecoration(boxShadow: [
+                       
+                      ],
+                    ),
+                    child: IconButton(
                       color: AppColors.errorColor,
                       icon: Image.asset(
                         bottomNavList[index]["icon"].toString(),
@@ -81,6 +88,10 @@ class _BottomNavState extends ConsumerState<BottomNav> {
                             : null,
                       ),
                       style: IconButton.styleFrom(
+                        elevation: ref.watch(bottomSelectedProvider) == index
+                            ? 8
+                            : 0,
+                        shadowColor: AppColors.accentColor,
                         backgroundColor: AppColors.embossLight,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.r),
@@ -92,21 +103,21 @@ class _BottomNavState extends ConsumerState<BottomNav> {
                             .update((state) => index);
                       },
                     ),
-                    SizedBox(height: 5.h),
-                    Text(
-                      bottomNavList[index]["label"].toString(),
-                      style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                        fontWeight: ref.watch(bottomSelectedProvider) == index
-                            ? FontWeight.bold
-                            : FontWeight.normal,
-                      ),
-                      textAlign: TextAlign.center,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      softWrap: true,
+                  ),
+                  SizedBox(height: 5.h),
+                  Text(
+                    bottomNavList[index]["label"].toString(),
+                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                      fontWeight: ref.watch(bottomSelectedProvider) == index
+                          ? FontWeight.bold
+                          : FontWeight.normal,
                     ),
-                  ],
-                ),
+                    textAlign: TextAlign.center,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    softWrap: true,
+                  ),
+                ],
               ),
             ),
           ),
@@ -126,7 +137,12 @@ class MyDrawer extends ConsumerWidget {
       elevation: 10,
       shadowColor: AppColors.shadowLight,
       backgroundColor: Colors.white,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.r)),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topRight: Radius.circular(20.r),
+          bottomRight: Radius.circular(20.r),
+        ),
+      ),
       child: SafeArea(
         child: ListView(
           padding: EdgeInsets.symmetric(horizontal: 30.w),
@@ -194,6 +210,7 @@ class MyDrawer extends ConsumerWidget {
                     width: 30.w,
                     height: 30.h,
                     fit: BoxFit.contain,
+                    color: Color(0xFF5FB3CC),
                   ),
                   title: Text(
                     "29035F",
@@ -210,6 +227,7 @@ class MyDrawer extends ConsumerWidget {
                     "assets/images/bottom_nav/compass.png",
                     width: 30.w,
                     height: 30.h,
+                    color: Color(0xFF5FB3CC),
                     fit: BoxFit.contain,
                   ),
                   title: Text(
@@ -227,6 +245,7 @@ class MyDrawer extends ConsumerWidget {
                     "assets/images/bottom_nav/mission.png",
                     width: 30.w,
                     height: 30.h,
+                    color: Color(0xFF5FB3CC),
                     fit: BoxFit.contain,
                   ),
                   title: Text(
@@ -244,6 +263,7 @@ class MyDrawer extends ConsumerWidget {
                     "assets/images/bottom_nav/gps.png",
                     width: 30.w,
                     height: 30.h,
+                    color: Color(0xFF5FB3CC),
                     fit: BoxFit.contain,
                   ),
                   title: Text(
@@ -261,6 +281,7 @@ class MyDrawer extends ConsumerWidget {
                     "assets/images/bottom_nav/lab.png",
                     width: 30.w,
                     height: 30.h,
+                    color: Color(0xFF5FB3CC),
                     fit: BoxFit.contain,
                   ),
                   title: Text(

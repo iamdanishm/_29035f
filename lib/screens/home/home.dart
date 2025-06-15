@@ -76,20 +76,18 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             ),
             HomeProgress(percentage: percentage),
             SizedBox(height: 20.h),
-            GridView.builder(
-              physics: const NeverScrollableScrollPhysics(),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 20.w,
-                mainAxisSpacing: 20.h,
-                childAspectRatio: 1.h,
-              ),
-              itemCount: homeNav.length,
+            GridView.extent(
+              maxCrossAxisExtent: 300.h,
               shrinkWrap: true,
-              itemBuilder: (context, index) {
-                final item = homeNav[index];
-                return HomeNueCard(item: item);
-              },
+              crossAxisSpacing: 20.w,
+              mainAxisSpacing: 20.h,
+              physics: const NeverScrollableScrollPhysics(),
+              children: [
+                HomeNueCard(item: homeNav[0]),
+                HomeNueCard(item: homeNav[1]),
+                HomeNueCard(item: homeNav[2]),
+                HomeNueCard(item: homeNav[3]),
+              ],
             ),
           ],
         ),
@@ -113,12 +111,10 @@ class HomeNueCard extends StatelessWidget {
         depth: 8,
         intensity: 0.6,
         boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(20.r)),
-        lightSource: LightSource.bottomRight,
+        lightSource: LightSource.topLeft,
         color: AppColors.nueCardBg,
-        shadowLightColor: AppColors.shadowLight,
+        shadowLightColor: Colors.white,
         shadowDarkColor: AppColors.shadowLight,
-        shadowLightColorEmboss: AppColors.embossLight,
-        shadowDarkColorEmboss: AppColors.embossLight,
       ),
       padding: EdgeInsets.all(10.w),
 

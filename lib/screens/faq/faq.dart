@@ -1,10 +1,10 @@
 import 'package:_29035f/model/faq.dart';
 import 'package:_29035f/providers/debounce_provider.dart';
 import 'package:_29035f/providers/faq/faq_provider.dart';
-import 'package:_29035f/providers/read_more_provider.dart';
 import 'package:_29035f/utils/app_colors.dart';
 import 'package:_29035f/utils/widgets/app_bar.dart';
 import 'package:_29035f/utils/widgets/neu_expandable.dart';
+import 'package:_29035f/utils/widgets/neu_loading.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -27,9 +27,6 @@ class _FaqState extends ConsumerState<Faq> {
   void initState() {
     super.initState();
     scrollController.addListener(onScroll);
-    Future.microtask(() async {
-      if (mounted) await onRefresh();
-    });
   }
 
   @override
@@ -50,8 +47,11 @@ class _FaqState extends ConsumerState<Faq> {
   Future onRefresh() async {
     ref.read(faqSearchQueryProvider.notifier).state = '';
     ref.read(faqTextControllerProvider).clear();
+
     final notifier = ref.refresh(paginatedFaqProvider.notifier);
-    if (!mounted) return;
+
+    if (!ref.context.mounted) return;
+
     await notifier.fetchFaqs();
   }
 
@@ -83,6 +83,7 @@ class _FaqState extends ConsumerState<Faq> {
                     data: (faqItems) {
                       return CustomScrollView(
                         controller: scrollController,
+                        physics: const AlwaysScrollableScrollPhysics(),
                         slivers: [
                           SliverPadding(
                             padding: EdgeInsets.symmetric(
@@ -129,7 +130,7 @@ class _FaqState extends ConsumerState<Faq> {
                       slivers: [
                         SliverFillRemaining(
                           hasScrollBody: false,
-                          child: Center(child: CircularProgressIndicator()),
+                          child: Center(child: NeuLoading()),
                         ),
                       ],
                     ),
@@ -173,13 +174,30 @@ class FaqTile extends ConsumerWidget {
     required this.isReadMoreProvider,
   });
 
+  bool shouldShowReadMore(BuildContext context, String text) {
+    final TextSpan span = TextSpan(
+      text: text,
+      style: Theme.of(
+        context,
+      ).textTheme.labelLarge!.copyWith(color: AppColors.shadowDark),
+    );
+
+    final TextPainter tp = TextPainter(
+      text: span,
+      textDirection: TextDirection.ltr,
+      maxLines: 4,
+    )..layout(maxWidth: MediaQuery.of(context).size.width - 60);
+
+    return tp.didExceedMaxLines;
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selected = ref.watch(isSelectedProvider);
     final isShow = ref.watch(isShowProvider);
     final isReadMore = ref.watch(isReadMoreProvider);
     final isExpanded = selected == index.toString() && isShow;
-    final shouldShowReadMore = ref.watch(readMoreProvider(faqItem.answer));
+    final isShowReadMore = shouldShowReadMore(context, faqItem.answer);
 
     return NeuExpandable(
       title: Text(
@@ -198,7 +216,7 @@ class FaqTile extends ConsumerWidget {
               context,
             ).textTheme.labelLarge!.copyWith(color: AppColors.shadowDark),
           ),
-          if (!isReadMore && shouldShowReadMore)
+          if (!isReadMore && isShowReadMore)
             Align(
               alignment: Alignment.centerLeft,
               child: Padding(

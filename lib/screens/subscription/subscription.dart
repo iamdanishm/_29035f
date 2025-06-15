@@ -93,6 +93,13 @@ class _SubscriptionState extends ConsumerState<Subscription> {
                 onPressed: () => launchUrl(
                   Uri(scheme: "mailto", path: "knowmore@29035f.co.nz"),
                 ),
+                style: TextButton.styleFrom(
+                  backgroundColor: Colors.white,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 30.w,
+                    vertical: 20.h,
+                  ),
+                ),
                 icon: Image.asset(
                   "assets/images/icons/mail.png",
                   width: 20.w,
@@ -121,6 +128,16 @@ class PlanCardWidget extends ConsumerWidget {
       convertedPriceProvider(plans[index]["price"]),
     );
 
+    Color planColor = Color(0xFFA9DAE8);
+
+    if (plans[index]["type"] == "Plus Plan") {
+      planColor = Color(0xFFFE956F);
+    }
+
+    if (plans[index]["type"] == "Premium Plan") {
+      planColor = Color(0xFF3B82F6);
+    }
+
     return Neumorphic(
       style: NeumorphicStyle(
         shape: NeumorphicShape.flat,
@@ -131,104 +148,135 @@ class PlanCardWidget extends ConsumerWidget {
         lightSource: LightSource.topLeft,
         color: Colors.white,
       ),
-      padding: EdgeInsets.all(20.h),
-      child: Column(
-        mainAxisSize: MainAxisSize.max,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Row(
-                spacing: 25.h,
-                children: [
-                  Container(
-                    width: 7.w,
-                    height: 43.h,
-                    margin: EdgeInsets.only(top: 20.h),
-                    decoration: BoxDecoration(
-                      color: Color(0xFFA9DAE8),
-                      borderRadius: BorderRadius.all(Radius.circular(2.r)),
+      padding: EdgeInsets.symmetric(horizontal: 20.h),
+      child: Padding(
+        padding: EdgeInsets.only(
+          bottom: 20.h,
+          top: plans[index]["type"] == "Plus Plan" ? 0 : 20.h,
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                if (plans[index]["type"] == "Plus Plan")
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: Container(
+                      width: 110.w,
+                      height: 43.h,
+                      decoration: BoxDecoration(
+                        color: planColor,
+                        borderRadius: BorderRadius.vertical(
+                          bottom: Radius.circular(10.r),
+                        ),
+                      ),
+                      alignment: Alignment.center,
+                      child: Text(
+                        "Popular",
+                        style: Theme.of(
+                          context,
+                        ).textTheme.titleMedium!.copyWith(color: Colors.white),
+                      ),
                     ),
                   ),
-                  Expanded(
+                Row(
+                  spacing: 25.h,
+                  children: [
+                    Container(
+                      width: 7.w,
+                      height: 43.h,
+                      margin: EdgeInsets.only(top: 20.h),
+                      decoration: BoxDecoration(
+                        color: planColor,
+                        borderRadius: BorderRadius.all(Radius.circular(2.r)),
+                      ),
+                    ),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            plans[index]["type"],
+                            style: Theme.of(context).textTheme.titleLarge!
+                                .copyWith(
+                                  fontSize: 22.spMin,
+                                  color: AppColors.textColor,
+                                ),
+                          ),
+                          Text(
+                            "$convertedPrice Free to Use",
+                            style: Theme.of(context).textTheme.titleLarge!
+                                .copyWith(
+                                  color: AppColors.textColor,
+                                  fontSize: 25.spMin,
+                                ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: 5.h),
+                  child: Divider(thickness: 1.h, endIndent: 5.w, indent: 5.w),
+                ),
+
+                SizedBox(
+                  height: 0.4.sh,
+                  child: SingleChildScrollView(
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text(
-                          plans[index]["type"],
-                          style: Theme.of(context).textTheme.titleLarge!
-                              .copyWith(
-                                fontSize: 22.spMin,
-                                color: AppColors.textColor,
-                              ),
-                        ),
-                        Text(
-                          "$convertedPrice Free to Use",
-                          style: Theme.of(context).textTheme.titleLarge!
-                              .copyWith(
-                                color: AppColors.textColor,
-                                fontSize: 25.spMin,
-                              ),
-                        ),
+                        ...plans[index]["services"].map((e) {
+                          return Padding(
+                            padding: EdgeInsets.only(top: 10.h),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              spacing: 20.h,
+                              children: [
+                                Icon(
+                                  Icons.check_rounded,
+                                  color: AppColors.lightTextColor,
+                                ),
+                                Expanded(
+                                  child: Text(
+                                    e,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
+                                        .copyWith(color: AppColors.textColor),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        }).toList(),
                       ],
                     ),
                   ),
-                ],
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 5.h),
-                child: Divider(thickness: 1.h, endIndent: 5.w, indent: 5.w),
-              ),
-
-              SizedBox(
-                height: 0.4.sh,
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      ...plans[index]["services"].map((e) {
-                        return Padding(
-                          padding: EdgeInsets.only(top: 10.h),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            spacing: 20.h,
-                            children: [
-                              Icon(
-                                Icons.check_rounded,
-                                color: AppColors.lightTextColor,
-                              ),
-                              Expanded(
-                                child: Text(
-                                  e,
-                                  style: Theme.of(context).textTheme.bodyMedium!
-                                      .copyWith(color: AppColors.textColor),
-                                ),
-                              ),
-                            ],
-                          ),
-                        );
-                      }).toList(),
-                    ],
-                  ),
                 ),
-              ),
-            ],
-          ),
+              ],
+            ),
 
-          NeuButton(
-            title: "Select Plan",
-            onPressed: () {},
-            height: 45.h,
-            shadowLightColor: AppColors.shadowLight,
-            color: Colors.white,
-            titleColor: AppColors.textColor,
-            width: 200.w,
-            boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(15.r)),
-          ),
-        ],
+            NeuButton(
+              title: "Select Plan",
+              onPressed: () {},
+              height: 45.h,
+              shadowLightColor: AppColors.shadowLight,
+              color: Colors.white,
+              titleColor: AppColors.textColor,
+              width: 200.w,
+              boxShape: NeumorphicBoxShape.roundRect(
+                BorderRadius.circular(15.r),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

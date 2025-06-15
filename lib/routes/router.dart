@@ -9,6 +9,7 @@ import 'package:_29035f/screens/concept/concept.dart';
 import 'package:_29035f/screens/contact/contact.dart';
 import 'package:_29035f/screens/faq/faq.dart';
 import 'package:_29035f/screens/home/home.dart';
+import 'package:_29035f/screens/practical_lab/journal.dart';
 import 'package:_29035f/screens/profile/profile.dart';
 import 'package:_29035f/screens/splash.dart';
 import 'package:_29035f/screens/subscription/subscription.dart';
@@ -116,6 +117,13 @@ final GoRouter router = GoRouter(
       name: "contact",
       builder: (BuildContext context, GoRouterState state) {
         return Contact();
+      },
+    ),
+    GoRoute(
+      path: "/journal",
+      name: "journal",
+      builder: (BuildContext context, GoRouterState state) {
+        return Journal();
       },
     ),
   ],
