@@ -116,7 +116,11 @@ class CommanAppBar extends ConsumerWidget {
                     children: [
                       TextSpan(
                         text: "f ",
-                        style: GoogleFonts.passionsConflict(fontSize: 32.sp),
+                        style: GoogleFonts.passionsConflict(
+                          fontSize: 40,
+                          fontWeight: FontWeight.w500,
+                          height: 0.5,
+                        ),
                       ),
 
                       TextSpan(

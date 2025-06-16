@@ -86,7 +86,9 @@ class _PracticalLabState extends ConsumerState<PracticalLab> {
                                 TextSpan(
                                   text: "f ",
                                   style: GoogleFonts.passionsConflict(
-                                    fontSize: 24.sp,
+                                    fontSize: 30,
+                                    fontWeight: FontWeight.w500,
+                                    height: 0.5,
                                   ),
                                 ),
 
