@@ -76,18 +76,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             ),
             HomeProgress(percentage: percentage),
             SizedBox(height: 20.h),
-            GridView.extent(
-              maxCrossAxisExtent: 300.h,
-              shrinkWrap: true,
-              crossAxisSpacing: 20.w,
-              mainAxisSpacing: 20.h,
-              physics: const NeverScrollableScrollPhysics(),
-              children: [
-                HomeNueCard(item: homeNav[0]),
-                HomeNueCard(item: homeNav[1]),
-                HomeNueCard(item: homeNav[2]),
-                HomeNueCard(item: homeNav[3]),
-              ],
+            Wrap(
+              runAlignment: WrapAlignment.spaceEvenly,
+              alignment: WrapAlignment.center,
+              crossAxisAlignment: WrapCrossAlignment.start,
+              runSpacing: 20.h,
+              spacing: 20.h,
+              children: homeNav.map((item) => HomeNueCard(item: item)).toList(),
             ),
           ],
         ),
@@ -103,54 +98,63 @@ class HomeNueCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return NeumorphicButton(
-      onPressed: () {
-        context.push(item["route"]);
-      },
-      style: NeumorphicStyle(
-        depth: 8,
-        intensity: 0.6,
-        boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(20.r)),
-        lightSource: LightSource.topLeft,
-        color: AppColors.nueCardBg,
-        shadowLightColor: Colors.white,
-        shadowDarkColor: AppColors.shadowLight,
-      ),
-      padding: EdgeInsets.all(10.w),
+    return SizedBox(
+      width: 160.w,
+      child: NeumorphicButton(
+        onPressed: () {
+          context.push(item["route"]);
+        },
+        style: NeumorphicStyle(
+          depth: 8,
+          intensity: 0.6,
+          boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(20.r)),
+          lightSource: LightSource.topLeft,
+          color: AppColors.nueCardBg,
+          shadowLightColor: Colors.white,
+          shadowDarkColor: AppColors.shadowLight,
+        ),
+        padding: EdgeInsets.all(10.w),
 
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            padding: EdgeInsets.all(10.w),
-            margin: EdgeInsets.only(left: 5.w),
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: Color(0xFFDBEEF5),
-            ),
-            child: Image.asset(
-              item["icon"],
-              height: 30.h,
-              width: 30.w,
-              fit: BoxFit.contain,
-            ),
+        child: SizedBox(
+          height: 150.h,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                padding: EdgeInsets.all(10.w),
+                margin: EdgeInsets.only(left: 5.w),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Color(0xFFDBEEF5),
+                ),
+                child: Image.asset(
+                  item["icon"],
+                  height: 30.h,
+                  width: 30.w,
+                  fit: BoxFit.contain,
+                ),
+              ),
+              SizedBox(height: 8.h),
+              Text(
+                item["title"],
+                style: Theme.of(
+                  context,
+                ).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 3.h),
+              Expanded(
+                child: Text(
+                  item["description"],
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                    color: AppColors.lightTextColor,
+                  ),
+                  overflow: TextOverflow.fade,
+                ),
+              ),
+            ],
           ),
-          SizedBox(height: 8.h),
-          Text(
-            item["title"],
-            style: Theme.of(
-              context,
-            ).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.bold),
-          ),
-          SizedBox(height: 3.h),
-          Text(
-            item["description"],
-            style: Theme.of(
-              context,
-            ).textTheme.bodyMedium!.copyWith(color: AppColors.lightTextColor),
-          ),
-        ],
+        ),
       ),
     );
   }

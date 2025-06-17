@@ -138,10 +138,16 @@ class _FaqState extends ConsumerState<Faq> {
                       slivers: [
                         SliverFillRemaining(
                           hasScrollBody: false,
-                          child: Center(
-                            child: Text(
-                              'Error: $error',
-                              style: Theme.of(context).textTheme.headlineMedium,
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Center(
+                              child: Text(
+                                'Something went wrong, please try again',
+                                textAlign: TextAlign.center,
+                                style: Theme.of(
+                                  context,
+                                ).textTheme.headlineMedium,
+                              ),
                             ),
                           ),
                         ),

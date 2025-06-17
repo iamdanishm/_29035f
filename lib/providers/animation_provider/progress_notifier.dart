@@ -38,3 +38,7 @@ class ProgressNotifier extends StateNotifier<double> {
 final progressProvider = StateNotifierProvider<ProgressNotifier, double>(
   (ref) => ProgressNotifier(),
 );
+
+final compassProgressProvider = StateNotifierProvider<ProgressNotifier, double>(
+  (ref) => ProgressNotifier(),
+);

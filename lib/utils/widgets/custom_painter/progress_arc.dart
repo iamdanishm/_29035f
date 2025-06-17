@@ -1,22 +1,29 @@
 import 'dart:math';
 
-import 'package:_29035f/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ProgressArcPainter extends CustomPainter {
   final double percentage;
-
-  ProgressArcPainter(this.percentage);
+  final StrokeCap strokeCap;
+  final double strokeWidth;
+  final Color color;
+  ProgressArcPainter({
+    required this.percentage,
+    required this.strokeCap,
+    required this.strokeWidth,
+    required this.color,
+  });
 
   @override
   void paint(Canvas canvas, Size size) {
     final center = size.center(Offset.zero);
-    final radius = size.width * 0.35.r; // Responsive radius
+    final radius = size.width * 0.35.r;
 
     final paint = Paint()
-      ..color = AppColors.accentColor
-      ..strokeWidth = 6.r
+      ..color = color
+      ..strokeWidth = strokeWidth
+      ..strokeCap = strokeCap
       ..style = PaintingStyle.stroke;
 
     double angle = 2 * pi * (percentage / 100);

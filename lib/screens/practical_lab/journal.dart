@@ -9,6 +9,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 
+// TODO: WORKING ON THIS
+
 class Journal extends ConsumerStatefulWidget {
   const Journal({super.key});
 
@@ -139,8 +141,18 @@ class _JournalState extends ConsumerState<Journal> {
                   ),
                 );
               },
-              error: (error, stackTrace) =>
-                  Expanded(child: Center(child: Text(error.toString()))),
+              error: (error, stackTrace) => Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Center(
+                    child: Text(
+                      'Something went wrong, please try again',
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.headlineMedium,
+                    ),
+                  ),
+                ),
+              ),
               loading: () => Expanded(child: Center(child: NeuLoading())),
             ),
           ],

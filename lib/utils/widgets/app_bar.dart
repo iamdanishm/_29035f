@@ -49,8 +49,13 @@ class HomeAppBar extends ConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.center,
 
             children: [
-              Text(title, style: Theme.of(context).textTheme.titleLarge),
-              if (title == "Practical Labs")
+              Text(
+                title,
+                style: Theme.of(
+                  context,
+                ).textTheme.titleLarge!.copyWith(fontSize: 20.spMin),
+              ),
+              if (title == "Practical Labs" || title == "Shape your Journey")
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0, left: 5.0),
                   child: Badge(
@@ -117,7 +122,7 @@ class CommanAppBar extends ConsumerWidget {
                       TextSpan(
                         text: "f ",
                         style: GoogleFonts.passionsConflict(
-                          fontSize: 40,
+                          fontSize: 38.spMin,
                           fontWeight: FontWeight.w500,
                           height: 0.5,
                         ),
@@ -125,15 +130,14 @@ class CommanAppBar extends ConsumerWidget {
 
                       TextSpan(
                         text: "Journal",
-                        style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.textColor,
-                        ),
+                        style: Theme.of(
+                          context,
+                        ).textTheme.titleLarge!.copyWith(fontSize: 20.spMin),
                       ),
                     ],
                     style: Theme.of(context).textTheme.titleLarge!.copyWith(
                       fontWeight: FontWeight.bold,
-                      color: AppColors.textColor,
+                      fontSize: 20.spMin,
                     ),
                   ),
                 ),
@@ -151,10 +155,9 @@ class CommanAppBar extends ConsumerWidget {
               width: 200.w,
               child: Text(
                 title,
-                style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                  color: AppColors.textColor,
-                  fontSize: 20.spMin,
-                ),
+                style: Theme.of(
+                  context,
+                ).textTheme.titleLarge!.copyWith(fontSize: 20.spMin),
                 textAlign: TextAlign.center,
                 overflow: TextOverflow.ellipsis,
               ),

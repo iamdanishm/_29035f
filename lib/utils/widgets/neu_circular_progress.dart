@@ -20,7 +20,7 @@ class NeuCircularProgress extends ConsumerWidget {
         Positioned(
           top: 70.h,
           child: CustomPaint(
-            size: Size(200.w, 200.h),
+            size: Size(200.h, 200.h),
             painter: DottedRingPainter(),
           ),
         ),
@@ -28,7 +28,7 @@ class NeuCircularProgress extends ConsumerWidget {
         Positioned(
           top: 65.h,
           child: SizedBox(
-            width: 205.w,
+            width: 205.h,
             height: 205.h,
             child: Neumorphic(
               style: NeumorphicStyle(
@@ -47,7 +47,7 @@ class NeuCircularProgress extends ConsumerWidget {
         Positioned(
           top: 88.h,
           child: SizedBox(
-            width: 160.w,
+            width: 160.h,
             height: 160.h,
             child: Neumorphic(
               style: NeumorphicStyle(
@@ -66,14 +66,19 @@ class NeuCircularProgress extends ConsumerWidget {
         Positioned(
           top: 85.h,
           child: CustomPaint(
-            size: Size(165.w, 165.h),
-            painter: ProgressArcPainter(percentage),
+            size: Size(165.h, 165.h),
+            painter: ProgressArcPainter(
+              percentage: percentage,
+              strokeCap: StrokeCap.butt,
+              strokeWidth: 6.r,
+              color: AppColors.accentColor,
+            ),
           ),
         ),
         Positioned(
           top: 122.h,
           child: SizedBox(
-            width: 90.w,
+            width: 90.h,
             height: 90.h,
             child: Neumorphic(
               style: NeumorphicStyle(
@@ -92,7 +97,7 @@ class NeuCircularProgress extends ConsumerWidget {
         Positioned(
           top: 131.h,
           child: SizedBox(
-            width: 72.w,
+            width: 72.h,
             height: 72.h,
             child: Neumorphic(
               style: NeumorphicStyle(
@@ -111,7 +116,7 @@ class NeuCircularProgress extends ConsumerWidget {
         Positioned(
           top: 142.h,
           child: CustomPaint(
-            size: Size(50.w, 50.h),
+            size: Size(50.h, 50.h),
             painter: PercentageTextPainter(percentage, context),
           ),
         ),

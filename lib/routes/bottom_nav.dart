@@ -1,3 +1,4 @@
+import 'package:_29035f/screens/compass_nav/compass_nav.dart';
 import 'package:_29035f/screens/home/home.dart';
 import 'package:_29035f/screens/practical_lab/practical_lab.dart';
 import 'package:_29035f/utils/app_colors.dart';
@@ -19,7 +20,7 @@ class BottomNav extends ConsumerStatefulWidget {
 class _BottomNavState extends ConsumerState<BottomNav> {
   List bottomNavWidget = [
     SafeArea(child: HomeScreen()),
-    SafeArea(child: Center(child: Text("Compass Navigator"))),
+    SafeArea(child: CompassNavigator()),
     SafeArea(child: Center(child: Text("Mission Control"))),
     SafeArea(child: Center(child: Text("Daily GPS"))),
     SafeArea(child: PracticalLab()),
