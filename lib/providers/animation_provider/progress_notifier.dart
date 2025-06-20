@@ -42,3 +42,7 @@ final progressProvider = StateNotifierProvider<ProgressNotifier, double>(
 final compassProgressProvider = StateNotifierProvider<ProgressNotifier, double>(
   (ref) => ProgressNotifier(),
 );
+
+final missionControlProvider = StateNotifierProvider<ProgressNotifier, double>(
+  (ref) => ProgressNotifier(),
+);

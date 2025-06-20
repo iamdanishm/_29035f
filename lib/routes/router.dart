@@ -1,3 +1,4 @@
+import 'package:_29035f/model/journal.dart' as journaldarmodel;
 import 'package:_29035f/routes/bottom_nav.dart';
 import 'package:_29035f/screens/auth/forgot_password/fp_email.dart';
 import 'package:_29035f/screens/auth/forgot_password/fp_resend.dart';
@@ -7,9 +8,11 @@ import 'package:_29035f/screens/auth/register.dart';
 import 'package:_29035f/screens/auth/reset_password.dart';
 import 'package:_29035f/screens/concept/concept.dart';
 import 'package:_29035f/screens/contact/contact.dart';
+import 'package:_29035f/screens/daily_gps/daily_gps_setting.dart';
 import 'package:_29035f/screens/faq/faq.dart';
 import 'package:_29035f/screens/home/home.dart';
 import 'package:_29035f/screens/practical_lab/journal.dart';
+import 'package:_29035f/screens/practical_lab/journal_detial.dart';
 import 'package:_29035f/screens/profile/profile.dart';
 import 'package:_29035f/screens/splash.dart';
 import 'package:_29035f/screens/subscription/subscription.dart';
@@ -126,13 +129,28 @@ final GoRouter router = GoRouter(
         return Journal();
       },
     ),
+    GoRoute(
+      path: "/journalDetial",
+      name: "journalDetial",
+      builder: (BuildContext context, GoRouterState state) {
+        final data = state.extra as journaldarmodel.Journal;
+        return JournalDetial(data: data);
+      },
+    ),
+    GoRoute(
+      path: "/dailysettings",
+      name: "dailysettings",
+      builder: (BuildContext context, GoRouterState state) {
+        return DailyGpsSetting();
+      },
+    ),
   ],
   errorBuilder: (context, state) => Scaffold(
     body: Padding(
       padding: const EdgeInsets.all(10.0),
       child: Center(
         child: Text(
-          '🥺No route defined for ${state.uri}',
+          '😢 Oops! We couldn\'t find the page you were looking for.',
           textAlign: TextAlign.center,
           style: Theme.of(context).textTheme.headlineMedium,
         ),

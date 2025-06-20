@@ -14,4 +14,10 @@ class AppColors {
   static const errorColor = Color(0xFFFF3333);
   static const accentColor = Color(0xFFC5DAE9);
   static const nueCardBg = Color(0xFFFFFFFF);
+
+  static const white = Colors.white;
+  static const compassColor = Color(0xFFE9E3D7);
+  static const missionColor = Color(0xFFE3D6DD);
+  static const dailyGpsColor = Color(0xFFFFEFBE);
+  static const practicalabColor = Color(0xFFFFD1D0);
 }

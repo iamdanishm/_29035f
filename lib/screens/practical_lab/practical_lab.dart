@@ -19,121 +19,126 @@ class _PracticalLabState extends ConsumerState<PracticalLab> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: EdgeInsets.only(
-                top: 20.h,
-                left: 20.w,
-                right: 20.w,
-                bottom: 10.h,
-              ),
-              child: HomeAppBar(
+        child: SingleChildScrollView(
+          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              HomeAppBar(
                 scaffoldKey: scaffoldKey.currentState!,
                 title: "Practical Labs",
               ),
-            ),
-            Expanded(
-              child: GridView.extent(
-                maxCrossAxisExtent: 300.h,
-                childAspectRatio: 0.90,
-                crossAxisSpacing: 25.w,
-                mainAxisSpacing: 30.h,
-                padding: EdgeInsets.only(bottom: 20.h, left: 20.w, right: 20.w),
-                children: practicalLabsNav.map((lab) {
-                  int index = practicalLabsNav.indexOf(lab);
-                  return NeumorphicButton(
-                    onPressed: () {
-                      context.push(lab['route'].toString());
-                    },
-                    style: NeumorphicStyle(
-                      depth: 8,
-                      intensity: 0.8,
-                      boxShape: NeumorphicBoxShape.roundRect(
-                        BorderRadius.circular(20.r),
-                      ),
-                      lightSource: LightSource.topLeft,
-                      color: AppColors.nueCardBg,
-                      shadowLightColor: Colors.white,
-                      shadowDarkColor: AppColors.shadowLight,
-                    ),
-                    padding: EdgeInsets.all(10.w),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Container(
-                          padding: EdgeInsets.all(10.w),
-                          margin: EdgeInsets.only(left: 5.w),
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Color(0xFFFFD1D0),
-                          ),
-                          child: Image.asset(
-                            lab['icon'] as String,
-                            height: 30.h,
-                            width: 30.w,
-                            fit: BoxFit.contain,
-                          ),
-                        ),
-                        SizedBox(height: 15.h),
-                        if (index == 2)
-                          RichText(
-                            text: TextSpan(
-                              text: lab['title'].toString().split(" ")[0],
-                              children: [
-                                TextSpan(
-                                  text: "f ",
-                                  style: GoogleFonts.passionsConflict(
-                                    fontSize: 30,
-                                    fontWeight: FontWeight.w500,
-                                    height: 0.5,
-                                  ),
-                                ),
-
-                                TextSpan(
-                                  text: lab['title'].toString().split(" ")[1],
-                                  style: Theme.of(context).textTheme.bodyLarge!
-                                      .copyWith(
-                                        fontWeight: FontWeight.bold,
-                                        color: AppColors.textColor,
-                                      ),
-                                ),
-                              ],
-                              style: Theme.of(context).textTheme.bodyLarge!
-                                  .copyWith(
-                                    fontWeight: FontWeight.bold,
-                                    color: AppColors.textColor,
-                                  ),
-                            ),
-                          ),
-                        if (index != 2)
-                          Text(
-                            lab['title'].toString(),
-                            style: Theme.of(context).textTheme.bodyLarge!
-                                .copyWith(fontWeight: FontWeight.bold),
-                          ),
-                        SizedBox(height: 8.h),
-                        Expanded(
-                          child: Text(
-                            lab['description'].toString(),
-                            maxLines: 4,
-                            overflow: TextOverflow.ellipsis,
-                            style: Theme.of(context).textTheme.labelSmall!
-                                .copyWith(
-                                  color: AppColors.lightTextColor,
-                                  fontSize: 8.sp,
-                                ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
+              Wrap(
+                runAlignment: WrapAlignment.spaceEvenly,
+                alignment: WrapAlignment.start,
+                crossAxisAlignment: WrapCrossAlignment.start,
+                runSpacing: 20.h,
+                spacing: 20.h,
+                children: practicalLabsNav.map((item) {
+                  final index = practicalLabsNav.indexOf(item);
+                  return PracticalLabCard(item: item, index: index);
                 }).toList(),
               ),
-            ),
-          ],
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class PracticalLabCard extends ConsumerWidget {
+  const PracticalLabCard({super.key, required this.item, required this.index});
+  final Map item;
+  final int index;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return SizedBox(
+      width: 160.w,
+      child: NeumorphicButton(
+        onPressed: () {
+          context.push(item["route"]);
+        },
+        style: NeumorphicStyle(
+          depth: 8,
+          intensity: 0.6,
+          boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(20.r)),
+          lightSource: LightSource.topLeft,
+          color: AppColors.nueCardBg,
+          shadowLightColor: Colors.white,
+          shadowDarkColor: AppColors.shadowLight,
+        ),
+        padding: EdgeInsets.all(10.h),
+        child: SizedBox(
+          height: 150.h,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                padding: EdgeInsets.all(10.h),
+                margin: EdgeInsets.only(left: 5.h),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Color(0xFFE9E3D7),
+                ),
+                child: Image.asset(
+                  item["icon"],
+                  height: 24.h,
+                  width: 24.h,
+                  fit: BoxFit.contain,
+                ),
+              ),
+              SizedBox(height: 8.h),
+              if (index == 2)
+                RichText(
+                  text: TextSpan(
+                    text: item['title'].toString().split(" ")[0],
+                    children: [
+                      TextSpan(
+                        text: "f ",
+                        style: GoogleFonts.passionsConflict(
+                          fontSize: 30,
+                          fontWeight: FontWeight.w500,
+                          height: 0.5,
+                        ),
+                      ),
+
+                      TextSpan(
+                        text: item['title'].toString().split(" ")[1],
+                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.textColor,
+                        ),
+                      ),
+                    ],
+                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.textColor,
+                    ),
+                  ),
+                ),
+              if (index != 2)
+                Text(
+                  item['title'].toString(),
+                  style: Theme.of(
+                    context,
+                  ).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.bold),
+                ),
+              SizedBox(height: 3.h),
+              Expanded(
+                child: Text(
+                  item["description"],
+                  style: Theme.of(context).textTheme.labelSmall!.copyWith(
+                    color: AppColors.lightTextColor,
+                    fontSize: 8.spMin,
+                  ),
+                  overflow: TextOverflow.fade,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

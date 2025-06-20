@@ -1,5 +1,7 @@
 import 'package:_29035f/screens/compass_nav/compass_nav.dart';
+import 'package:_29035f/screens/daily_gps/daily_gps.dart';
 import 'package:_29035f/screens/home/home.dart';
+import 'package:_29035f/screens/mission_control/mission_control.dart';
 import 'package:_29035f/screens/practical_lab/practical_lab.dart';
 import 'package:_29035f/utils/app_colors.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
@@ -21,28 +23,46 @@ class _BottomNavState extends ConsumerState<BottomNav> {
   List bottomNavWidget = [
     SafeArea(child: HomeScreen()),
     SafeArea(child: CompassNavigator()),
-    SafeArea(child: Center(child: Text("Mission Control"))),
-    SafeArea(child: Center(child: Text("Daily GPS"))),
+    SafeArea(child: MissionControl()),
+    SafeArea(child: DailyGps()),
     SafeArea(child: PracticalLab()),
   ];
 
   List bottomNavList = [
-    {"id": 1, "icon": "assets/images/bottom_nav/home.png", "label": "29035F"},
+    {
+      "id": 1,
+      "icon": "assets/images/bottom_nav/home.png",
+      "label": "29035F",
+      "focusBgColor": AppColors.white,
+      "iconColor": AppColors.secondaryColor,
+    },
     {
       "id": 2,
       "icon": "assets/images/bottom_nav/compass.png",
       "label": "Compass Navigator",
+      "focusBgColor": AppColors.compassColor,
+      "iconColor": AppColors.secondaryColor,
     },
     {
       "id": 3,
       "icon": "assets/images/bottom_nav/mission.png",
       "label": "Mission Control",
+      "focusBgColor": AppColors.missionColor,
+      "iconColor": AppColors.secondaryColor,
     },
-    {"id": 4, "icon": "assets/images/bottom_nav/gps.png", "label": "Daily GPS"},
+    {
+      "id": 4,
+      "icon": "assets/images/bottom_nav/gps.png",
+      "label": "Daily GPS",
+      "focusBgColor": AppColors.dailyGpsColor,
+      "iconColor": Color(0xFFFAAB4B),
+    },
     {
       "id": 5,
       "icon": "assets/images/bottom_nav/lab.png",
       "label": "Practice Labs",
+      "focusBgColor": AppColors.practicalabColor,
+      "iconColor": AppColors.secondaryColor,
     },
   ];
 
@@ -72,38 +92,37 @@ class _BottomNavState extends ConsumerState<BottomNav> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Container(
-                    decoration: BoxDecoration(boxShadow: [
-                       
-                      ],
+                  IconButton(
+                    color: AppColors.errorColor,
+                    icon: Image.asset(
+                      bottomNavList[index]["icon"].toString(),
+                      width: 26.h,
+                      height: 26.h,
+                      fit: BoxFit.contain,
+                      color: ref.watch(bottomSelectedProvider) == index
+                          ? bottomNavList[index]["iconColor"]
+                          : null,
                     ),
-                    child: IconButton(
-                      color: AppColors.errorColor,
-                      icon: Image.asset(
-                        bottomNavList[index]["icon"].toString(),
-                        width: 26.h,
-                        height: 26.h,
-                        fit: BoxFit.contain,
-                        color: ref.watch(bottomSelectedProvider) == index
-                            ? AppColors.secondaryColor
-                            : null,
+                    style: IconButton.styleFrom(
+                      elevation: ref.watch(bottomSelectedProvider) == index
+                          ? 8
+                          : 0,
+                      shadowColor: AppColors.accentColor,
+                      backgroundColor:
+                          ref.watch(bottomSelectedProvider) == index
+                          ? bottomNavList[index]["focusBgColor"]
+                          : AppColors.embossLight,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: ref.watch(bottomSelectedProvider) == index
+                            ? BorderRadius.circular(16.r)
+                            : BorderRadius.circular(10.r),
                       ),
-                      style: IconButton.styleFrom(
-                        elevation: ref.watch(bottomSelectedProvider) == index
-                            ? 8
-                            : 0,
-                        shadowColor: AppColors.accentColor,
-                        backgroundColor: AppColors.embossLight,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.r),
-                        ),
-                      ),
-                      onPressed: () {
-                        ref
-                            .read(bottomSelectedProvider.notifier)
-                            .update((state) => index);
-                      },
                     ),
+                    onPressed: () {
+                      ref
+                          .read(bottomSelectedProvider.notifier)
+                          .update((state) => index);
+                    },
                   ),
                   SizedBox(height: 5.h),
                   Text(

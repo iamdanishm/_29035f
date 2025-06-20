@@ -9,6 +9,9 @@ class NeuCheckbox extends StatelessWidget {
   final EdgeInsets margin;
   final Duration duration;
   final Curve curve;
+  final Color iconColor;
+  final Color? unselectedColor;
+  final double iconSize;
 
   const NeuCheckbox({
     super.key,
@@ -22,6 +25,9 @@ class NeuCheckbox extends StatelessWidget {
     this.padding = const EdgeInsets.symmetric(horizontal: 5.0, vertical: 5.0),
     this.margin = const EdgeInsets.all(5.0),
     this.isEnabled = true,
+    this.iconColor = Colors.white,
+    this.unselectedColor,
+    this.iconSize = 20.0,
   });
 
   bool get isSelected => value;
@@ -53,14 +59,9 @@ class NeuCheckbox extends StatelessWidget {
       depth = 0;
     }
 
-    Color? color = isSelected ? selectedColor : null;
+    Color? color = isSelected ? selectedColor : unselectedColor;
     if (!isEnabled) {
       color = null;
-    }
-
-    Color iconColor = isSelected ? theme.baseColor : selectedColor;
-    if (!isEnabled) {
-      iconColor = theme.disabledColor;
     }
 
     return NeumorphicButton(
@@ -87,8 +88,8 @@ class NeuCheckbox extends StatelessWidget {
         shape: NeumorphicShape.flat,
       ),
       child: isSelected
-          ? Icon(Icons.check, color: iconColor, size: 20.0)
-          : SizedBox(width: 20.0, height: 20.0),
+          ? Icon(Icons.check, color: iconColor, size: iconSize)
+          : SizedBox(width: iconSize, height: iconSize),
     );
   }
 }

@@ -6,9 +6,15 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class HomeAppBar extends ConsumerWidget {
-  const HomeAppBar({super.key, required this.scaffoldKey, required this.title});
+  const HomeAppBar({
+    super.key,
+    required this.scaffoldKey,
+    required this.title,
+    this.actionWidget,
+  });
   final ScaffoldState scaffoldKey;
   final String title;
+  final Widget? actionWidget;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -44,27 +50,35 @@ class HomeAppBar extends ConsumerWidget {
               },
             ),
           ),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
+          SizedBox(
+            width: 0.65.sw,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
 
-            children: [
-              Text(
-                title,
-                style: Theme.of(
-                  context,
-                ).textTheme.titleLarge!.copyWith(fontSize: 20.spMin),
-              ),
-              if (title == "Practical Labs" || title == "Shape your Journey")
-                Padding(
-                  padding: const EdgeInsets.only(top: 8.0, left: 5.0),
-                  child: Badge(
-                    backgroundColor: Color(0xFFF9817E),
-                    smallSize: 12,
+              children: [
+                Flexible(
+                  child: Text(
+                    title,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(
+                      context,
+                    ).textTheme.titleLarge!.copyWith(fontSize: 20.spMin),
                   ),
                 ),
-            ],
+                if (title == "Practical Labs" || title == "Shape your Journey")
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8.0, left: 5.0),
+                    child: Badge(
+                      backgroundColor: Color(0xFFF9817E),
+                      smallSize: 12,
+                    ),
+                  ),
+              ],
+            ),
           ),
+          actionWidget ?? const SizedBox.shrink(),
         ],
       ),
     );

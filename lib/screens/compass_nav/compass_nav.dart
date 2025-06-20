@@ -147,8 +147,8 @@ class CompassCardWidget extends ConsumerWidget {
                     ),
                     child: Image.asset(
                       item["icon"],
-                      height: 30.h,
-                      width: 30.h,
+                      height: 24.h,
+                      width: 24.h,
                       fit: BoxFit.contain,
                     ),
                   ),

@@ -6,12 +6,14 @@ class StepRulerPainter extends CustomPainter {
   final List<int> activeSteps;
   final double spacing;
   final BuildContext context;
+  final bool circle;
 
   StepRulerPainter({
     required this.totalSteps,
     required this.activeSteps,
     required this.spacing,
     required this.context,
+    this.circle = true,
   });
 
   @override
@@ -68,8 +70,13 @@ class StepRulerPainter extends CustomPainter {
               ? Color(0xFFF85A83)
               : Colors.white
           ..style = PaintingStyle.fill;
-
-        canvas.drawCircle(Offset(x, centerY - 15.r), circleRadius, circlePaint);
+        if (circle) {
+          canvas.drawCircle(
+            Offset(x, centerY - 15.r),
+            circleRadius,
+            circlePaint,
+          );
+        }
       } else {
         // Minor tick (aligned at bottom)
         canvas.drawLine(

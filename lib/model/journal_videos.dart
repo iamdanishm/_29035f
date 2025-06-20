@@ -1,74 +1,81 @@
-class JournalModel {
+class JournalVideoModal {
   bool status;
   String message;
-  List<Journal> data;
+  List<JournalVideoData> data;
   Pagination pagination;
 
-  JournalModel({
+  JournalVideoModal({
     required this.status,
     required this.message,
     required this.data,
     required this.pagination,
   });
 
-  factory JournalModel.fromJson(Map<String, dynamic> json) {
-    return JournalModel(
+  factory JournalVideoModal.fromJson(Map<String, dynamic> json) {
+    return JournalVideoModal(
       status: json['status'],
       message: json['message'],
-      data: List<Journal>.from(json['data'].map((x) => Journal.fromJson(x))),
+      data: List<JournalVideoData>.from(
+        json['data'].map((x) => JournalVideoData.fromJson(x)),
+      ),
       pagination: Pagination.fromJson(json['pagination']),
     );
   }
 }
 
-class Journal {
+class JournalVideoData {
   int id;
   String title;
   String slug;
   int categoryId;
   int authorId;
   String content;
-  String image;
-  int blogReadingTime;
+  String video;
+  String photo;
   int isPublished;
-  dynamic publishedAt;
+  DateTime? publishedAt;
   DateTime createdAt;
   DateTime updatedAt;
-  String imageUrl;
+  String videoUrl;
+  String photoUrl;
   Category category;
 
-  Journal({
+  JournalVideoData({
     required this.id,
     required this.title,
     required this.slug,
     required this.categoryId,
     required this.authorId,
     required this.content,
-    required this.image,
-    required this.blogReadingTime,
+    required this.video,
+    required this.photo,
     required this.isPublished,
     required this.publishedAt,
     required this.createdAt,
     required this.updatedAt,
-    required this.imageUrl,
+    required this.videoUrl,
+    required this.photoUrl,
     required this.category,
   });
 
-  factory Journal.fromJson(Map<String, dynamic> json) {
-    return Journal(
+  factory JournalVideoData.fromJson(Map<String, dynamic> json) {
+    return JournalVideoData(
       id: json['id'],
       title: json['title'],
       slug: json['slug'],
       categoryId: json['category_id'],
       authorId: json['author_id'],
       content: json['content'],
-      image: json['image'],
-      blogReadingTime: json['blog_reading_time'],
+      video: json['video'],
+      photo: json['photo'],
       isPublished: json['is_published'],
-      publishedAt: json['published_at'],
+      publishedAt: json['published_at'] == null
+          ? null
+          : DateTime.parse(json['published_at']),
       createdAt: DateTime.parse(json['created_at']),
       updatedAt: DateTime.parse(json['updated_at']),
-      imageUrl: json['image_url'],
+      videoUrl: json['video_url'],
+      photoUrl: json['photo_url'],
       category: Category.fromJson(json['category']),
     );
   }
@@ -78,8 +85,8 @@ class Category {
   int id;
   String name;
   String title;
-  dynamic slug;
-  dynamic description;
+  String? slug;
+  String? description;
   int status;
   DateTime createdAt;
   DateTime updatedAt;
@@ -114,8 +121,8 @@ class Pagination {
   int perPage;
   int currentPage;
   int lastPage;
-  dynamic nextPageUrl;
-  dynamic prevPageUrl;
+  String? nextPageUrl;
+  String? prevPageUrl;
 
   Pagination({
     required this.total,

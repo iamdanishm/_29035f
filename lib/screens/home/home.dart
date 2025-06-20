@@ -130,8 +130,8 @@ class HomeNueCard extends StatelessWidget {
                 ),
                 child: Image.asset(
                   item["icon"],
-                  height: 30.h,
-                  width: 30.w,
+                  height: 24.h,
+                  width: 24.w,
                   fit: BoxFit.contain,
                 ),
               ),
